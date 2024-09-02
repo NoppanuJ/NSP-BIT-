@@ -1,0 +1,86 @@
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    height: 100vh;
+}
+
+.settings-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+h1 {
+    margin: 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.user-info span {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.settings-section {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.notifications-section h2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.toggle-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.toggle-item:last-child {
+    border-bottom: none;
+}
+
+.settings-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.settings-button svg {
+    margin-right: 10px;
+}
