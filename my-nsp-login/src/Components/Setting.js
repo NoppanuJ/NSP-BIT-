@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaUser, FaBell, FaLock } from 'react-icons/fa';
 import '../CssComponents/Setting.css';
+import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
     const [notifications, setNotifications] = useState({
@@ -14,6 +15,15 @@ const Settings = () => {
             ...notifications,
             [key]: !notifications[key],
         });
+    };
+
+    const navigate = useNavigate();
+
+    const ProfileEdit = () => {
+        navigate('/profileedit');
+    };
+    const ChangePassword = () => {
+        navigate('/changepassword');
     };
 
     return (
@@ -54,10 +64,10 @@ const Settings = () => {
                 </div>
             </div>
             <div className="settings-section">
-                <button className="settings-button">
+                <button className="settings-button" onClick={ProfileEdit}>
                     <FaUser /> Edit Profile
                 </button>
-                <button className="settings-button">
+                <button className="settings-button" onClick={ChangePassword}>
                     <FaLock /> Change Password
                 </button>
             </div>

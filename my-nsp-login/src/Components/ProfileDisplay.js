@@ -1,7 +1,13 @@
 import React from 'react';
 import '../CssComponents/ProfileDisplay.css';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileDisplay = () => {
+    const navigate = useNavigate();
+
+    const ProfileEdit = () => {
+        navigate('/profileedit');
+    };
     return (
         <div className="profile-container">
             <header className="profile-header">
@@ -38,7 +44,7 @@ const ProfileDisplay = () => {
                     <span className="profile-value">johndoe@gmail.com</span>
                 </div>
             </div>
-            <button className="edit-profile-button">Edit Profile</button>
+            <button className="edit-profile-button" onClick={ProfileEdit}>Edit Profile</button>
         </div>
     );
 };

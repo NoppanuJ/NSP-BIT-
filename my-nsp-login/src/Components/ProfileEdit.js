@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../CssComponents/ProfileEdit.css';
 
+
 const ProfileEdit = () => {
     const [formData, setFormData] = useState({
         firstName: '',
@@ -34,6 +35,7 @@ const ProfileEdit = () => {
     const handleCancel = () => {
         // Handle the cancel action here
     };
+
 
     return (
         <div className="profile-edit-container">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '../CssComponents/ChangePassword.css';
 
+
 const ChangePassword = () => {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
@@ -22,6 +23,8 @@ const ChangePassword = () => {
     const handleSubmit = () => {
         // Handle the save action here (e.g., sending the data to the backend)
     };
+
+    
 
     return (
         <div className="change-password-container">
