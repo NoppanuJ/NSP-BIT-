@@ -9,6 +9,9 @@ import Setting from './Components/Setting'
 import ProfileDisplay from './Components/ProfileDisplay'
 import ProfileEdit from './Components/ProfileEdit'
 import ChangePassword from './Components/ChangePassword';
+import Notification from './Components/Notification';
+import ShiftRequest from './Components/ShiftRequest';
+import ShiftRequestConfirmation from './Components/ShiftRequestConfirmation';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 const App = () => {
     return (
@@ -21,6 +24,9 @@ const App = () => {
                 <Route path="/profiledisplay" element={<ProfileDisplay />} /> {/*ProfileDisplay */}
                 <Route path="/profileedit" element={<ProfileEdit />} /> {/*ProfileEdit */}
                 <Route path="/changepassword" element={<ChangePassword />} /> {/*ChangePassword */}
+                <Route path="/notification" element={<Notification />} /> {/*Notification */}
+                <Route path="/shiftrequest" element={<ShiftRequest />} /> {/*ShiftRequest */}
+                <Route path="/shiftrequestconfirmation" element={<ShiftRequestConfirmation />} /> {/*ShiftRequestConfirmation */}
             </Routes>
         </Router>
         
