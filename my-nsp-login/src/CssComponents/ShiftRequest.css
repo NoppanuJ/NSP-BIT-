@@ -1,57 +1,55 @@
 .shift-request-container {
-    padding: 20px;
-    background-color: #f0f0f0;
-    height: 100vh;
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  p {
-    color: gray;
-    margin-bottom: 20px;
-  }
-  
-  .shift-request-form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px;
-    margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .datepicker-input,
-  .timepicker-input,
-  .reason-textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .reason-textarea {
-    resize: none;
-  }
-  
-  .submit-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 18px;
-  }
-  
+  padding: 20px;
+  background-color: #f0f0f0;
+  height: 100vh;
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.shift-request-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.datepicker-input,
+.reason-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.reason-textarea {
+  resize: none;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+}
