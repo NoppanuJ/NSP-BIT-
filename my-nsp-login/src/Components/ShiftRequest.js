@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { RadioGroup, Radio, FormControlLabel, TextField, Button, MenuItem } from '@mui/material';
+import { TextField, MenuItem, Button, RadioGroup, Radio, FormControlLabel } from '@mui/material';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../CssComponents/ShiftRequest.css';
 
@@ -9,11 +9,17 @@ const ShiftRequest = () => {
   const [selectedTime, setSelectedTime] = useState('');
   const [requestType, setRequestType] = useState('scheduleChange');
   const [selectedNurse, setSelectedNurse] = useState('');
+  const [nurseSearch, setNurseSearch] = useState('');
   const [selectedShift, setSelectedShift] = useState('');
   const [reason, setReason] = useState('');
 
-  const nurses = ['John Doe', 'Jane Smith', 'Michael Lee'];
-  const shifts = ['Morning Shift', 'Evening Shift', 'Night Shift'];
+  const nurses = ['John Doe', 'Jane Smith', 'Michael Lee', 'Emily Davis', 'Robert Brown'];
+
+  const filteredNurses = nurses.filter((nurse) =>
+    nurse.toLowerCase().includes(nurseSearch.toLowerCase())
+  );
+
+  const shifts = ['Morning Shift', 'Afternoon Shift', 'Night Shift'];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,6 +66,13 @@ const ShiftRequest = () => {
             <div className="form-group">
               <label>Select nurse</label>
               <TextField
+                type="text"
+                placeholder="Search nurse"
+                value={nurseSearch}
+                onChange={(e) => setNurseSearch(e.target.value)}
+                fullWidth
+              />
+              <TextField
                 select
                 fullWidth
                 value={selectedNurse}
@@ -67,7 +80,7 @@ const ShiftRequest = () => {
                 variant="outlined"
                 placeholder="Select nurse"
               >
-                {nurses.map((nurse, index) => (
+                {filteredNurses.map((nurse, index) => (
                   <MenuItem key={index} value={nurse}>
                     {nurse}
                   </MenuItem>
