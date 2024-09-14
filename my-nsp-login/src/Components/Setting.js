@@ -1,78 +1,70 @@
 import React, { useState } from 'react';
-import { FaUser, FaBell, FaLock } from 'react-icons/fa';
+import { Switch, Collapse } from '@mui/material';
+import { FaBell, FaLock, FaAngleDown } from 'react-icons/fa';
 import '../CssComponents/Setting.css';
-import { useNavigate } from 'react-router-dom';
 
-const Settings = () => {
-    const [notifications, setNotifications] = useState({
-        shiftChanges: false,
-        alerts: false,
-        messages: false,
-    });
+const Setting = () => {
+  const [notificationsOpen, setNotificationsOpen] = useState(true);
+  const [shiftChanges, setShiftChanges] = useState(true);
+  const [alerts, setAlerts] = useState(false);
+  const [messages, setMessages] = useState(false);
 
-    const toggleNotification = (key) => {
-        setNotifications({
-            ...notifications,
-            [key]: !notifications[key],
-        });
-    };
+  const toggleNotificationsOpen = () => {
+    setNotificationsOpen(!notificationsOpen);
+  };
 
-    const navigate = useNavigate();
+  return (
+    <div className="setting-container">
+      <h1>Setting</h1>
 
-    const ProfileEdit = () => {
-        navigate('/profileedit');
-    };
-    const ChangePassword = () => {
-        navigate('/changepassword');
-    };
-
-    return (
-        <div className="settings-container">
-            <header className="settings-header">
-                <button className="back-button">{'<'}</button>
-                <h1>Settings</h1>
-            </header>
-            <div className="user-info">
-                <FaUser size={40} />
-                <span>John Doe</span>
-            </div>
-            <div className="settings-section notifications-section">
-                <h2><FaBell /> Notifications</h2>
-                <div className="toggle-item">
-                    <span>Shift Changes</span>
-                    <input
-                        type="checkbox"
-                        checked={notifications.shiftChanges}
-                        onChange={() => toggleNotification('shiftChanges')}
-                    />
-                </div>
-                <div className="toggle-item">
-                    <span>Alerts</span>
-                    <input
-                        type="checkbox"
-                        checked={notifications.alerts}
-                        onChange={() => toggleNotification('alerts')}
-                    />
-                </div>
-                <div className="toggle-item">
-                    <span>Messages</span>
-                    <input
-                        type="checkbox"
-                        checked={notifications.messages}
-                        onChange={() => toggleNotification('messages')}
-                    />
-                </div>
-            </div>
-            <div className="settings-section">
-                <button className="settings-button" onClick={ProfileEdit}>
-                    <FaUser /> Edit Profile
-                </button>
-                <button className="settings-button" onClick={ChangePassword}>
-                    <FaLock /> Change Password
-                </button>
-            </div>
+      {/* Notifications Section */}
+      <div className="setting-section">
+        <div className="setting-header" onClick={toggleNotificationsOpen}>
+          <div className="setting-header-title">
+            <FaBell />
+            <span>Notifications</span>
+          </div>
+          <FaAngleDown className={`toggle-icon ${notificationsOpen ? 'open' : ''}`} />
         </div>
-    );
+        <Collapse in={notificationsOpen}>
+          <div className="notification-options">
+            <div className="notification-item">
+              <span>Shift Changes</span>
+              <Switch
+                checked={shiftChanges}
+                onChange={() => setShiftChanges(!shiftChanges)}
+              />
+            </div>
+            <div className="notification-item">
+              <span>Alerts</span>
+              <Switch
+                checked={alerts}
+                onChange={() => setAlerts(!alerts)}
+              />
+            </div>
+            <div className="notification-item">
+              <span>Messages</span>
+              <Switch
+                checked={messages}
+                onChange={() => setMessages(!messages)}
+              />
+            </div>
+          </div>
+        </Collapse>
+      </div>
+
+      {/* Change Password Section */}
+      <div className="setting-section">
+        <div className="setting-header">
+          <div className="setting-header-title">
+            <FaLock />
+            <span>Change Password</span>
+          </div>
+          <FaAngleDown className="toggle-icon" />
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default Settings;
+export default Setting;
