@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Switch, Collapse } from '@mui/material';
-import { FaBell, FaLock, FaAngleDown } from 'react-icons/fa';
+import { FaBell, FaLock, FaAngleDown, FaAngleLeft, FaAngleRight, FaAngleDoubleDown } from 'react-icons/fa';
 import '../CssComponents/Setting.css';
 
 const Setting = () => {
@@ -20,7 +20,7 @@ const Setting = () => {
       {/* Notifications Section */}
       <div className="setting-section">
         <div className="setting-header" onClick={toggleNotificationsOpen}>
-          <div className="setting-header-title">
+          <div className="settings-header-title">
             <FaBell />
             <span>Notifications</span>
           </div>
@@ -60,7 +60,7 @@ const Setting = () => {
             <FaLock />
             <span>Change Password</span>
           </div>
-          <FaAngleDown className="toggle-icon" />
+          <FaAngleRight className="toggle-icon" />
         </div>
       </div>
     </div>
