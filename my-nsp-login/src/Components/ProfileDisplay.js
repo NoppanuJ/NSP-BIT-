@@ -1,52 +1,87 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Avatar, Button, IconButton } from '@mui/material';
+import { PhotoCamera } from '@mui/icons-material';
 import '../CssComponents/ProfileDisplay.css';
-import { useNavigate } from 'react-router-dom';
 
 const ProfileDisplay = () => {
-    const navigate = useNavigate();
+  const [profile, setProfile] = useState({
+    displayedName: 'John Doe',
+    firstName: 'John',
+    lastName: 'Doe',
+    sex: 'Male',
+    dateOfBirth: '01/01/2000',
+    phoneNumber: '0123456789',
+    email: 'johndoe@gmail.com',
+  });
 
-    const ProfileEdit = () => {
-        navigate('/profileedit');
-    };
-    return (
-        <div className="profile-container">
-            <header className="profile-header">
-                <button className="back-button">{'<'}</button>
-                <h1>Profile</h1>
-            </header>
-            <div className="profile-info">
-                <div className="profile-item">
-                    <span className="profile-label">Displayed Name</span>
-                    <span className="profile-value">John Doe</span>
-                </div>
-                <div className="profile-item">
-                    <span className="profile-label">First Name</span>
-                    <span className="profile-value">John</span>
-                </div>
-                <div className="profile-item">
-                    <span className="profile-label">Last Name</span>
-                    <span className="profile-value">Doe</span>
-                </div>
-                <div className="profile-item">
-                    <span className="profile-label">Sex</span>
-                    <span className="profile-value">Male</span>
-                </div>
-                <div className="profile-item">
-                    <span className="profile-label">Date of Birth</span>
-                    <span className="profile-value">01/01/1990</span>
-                </div>
-                <div className="profile-item">
-                    <span className="profile-label">Phone number</span>
-                    <span className="profile-value">012-345-6789</span>
-                </div>
-                <div className="profile-item">
-                    <span className="profile-label">Email</span>
-                    <span className="profile-value">johndoe@gmail.com</span>
-                </div>
-            </div>
-            <button className="edit-profile-button" onClick={ProfileEdit}>Edit Profile</button>
+  const [profileImage, setProfileImage] = useState(null);
+
+  const handleProfileImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProfileImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handleEditProfile = () => {
+    console.log('Navigate to Edit Profile');
+    // Logic to navigate to the edit profile page
+  };
+
+  return (
+    <div className="profile-display-container">
+      <div className="profile-picture">
+        <Avatar src={profileImage} sx={{ width: 100, height: 100 }} />
+        <input
+          accept="image/*"
+          style={{ display: 'none' }}
+          id="icon-button-file"
+          type="file"
+          onChange={handleProfileImageChange}
+        />
+        <label htmlFor="icon-button-file">
+          <IconButton color="primary" aria-label="upload picture" component="span">
+            <PhotoCamera />
+          </IconButton>
+        </label>
+      </div>
+
+      <div className="profile-info">
+        <div className="profile-row">
+          <span>Displayed Name</span>
+          <span>{profile.displayedName}</span>
         </div>
-    );
+        <div className="profile-row">
+          <span>First Name</span>
+          <span>{profile.firstName}</span>
+        </div>
+        <div className="profile-row">
+          <span>Last Name</span>
+          <span>{profile.lastName}</span>
+        </div>
+        <div className="profile-row">
+          <span>Sex</span>
+          <span>{profile.sex}</span>
+        </div>
+        <div className="profile-row">
+          <span>Date of Birth</span>
+          <span>{profile.dateOfBirth}</span>
+        </div>
+        <div className="profile-row">
+          <span>Phone number</span>
+          <span>{profile.phoneNumber}</span>
+        </div>
+        <div className="profile-row">
+          <span>Email</span>
+          <span>{profile.email}</span>
+        </div>
+      </div>
+      
+      <Button variant="contained" color="primary" className="edit-button" onClick={handleEditProfile}>
+        Edit Profile
+      </Button>
+    </div>
+  );
 };
 
 export default ProfileDisplay;
