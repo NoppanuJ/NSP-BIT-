@@ -12,6 +12,7 @@ import ChangePassword from './Components/ChangePassword';
 import Notification from './Components/Notification';
 import ShiftRequest from './Components/ShiftRequest';
 import ShiftRequestConfirmation from './Components/ShiftRequestConfirmation';
+import Schedule from './Components/Schedule';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path="/notification" element={<Notification />} /> {/*Notification */}
                 <Route path="/shiftrequest" element={<ShiftRequest />} /> {/*ShiftRequest */}
                 <Route path="/shiftrequestconfirmation" element={<ShiftRequestConfirmation />} /> {/*ShiftRequestConfirmation */}
+                <Route path="/schedule" element={<Schedule />} /> {/*Schedule */}
             </Routes>
         </Router>
         
