@@ -40,8 +40,8 @@ const ProfileEdit = () => {
     return (
         <div className="profile-edit-container">
             <header className="profile-edit-header">
-                <button className="back-button">{'<'}</button>
-                <h1>Profile</h1>
+               
+                <h1>Edit profile</h1>
             </header>
             <form className="profile-edit-form">
                 <div className="form-group">
