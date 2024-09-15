@@ -29,7 +29,6 @@ const ChangePassword = () => {
     return (
         <div className="change-password-container">
             <header className="change-password-header">
-                <button className="back-button">{'<'}</button>
                 <h1>Change Password</h1>
             </header>
             <form className="change-password-form">
