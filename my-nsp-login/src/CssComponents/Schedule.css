@@ -1,46 +1,30 @@
 .schedule-container {
-    display: flex;
-    padding: 20px;
-    height: 100vh;
-    background-color: #f0f0f0;
-  }
-  
-  .left-panel {
-    flex: 1;
-    padding-right: 20px;
-    border-right: 2px solid #ccc;
-  }
-  
-  .right-panel {
-    flex: 2;
-    padding-left: 20px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .shift-info {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-  }
-  
-  .shift-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 5px;
-  }
-  
-  .calendar-view {
-    margin-top: 20px;
-  }
-  
-  .MuiToggleButton-root {
-    margin-right: 10px;
-  }
-  
+  display: flex;
+  padding: 20px;
+  height: 100vh;
+}
+
+.left-panel {
+  flex: 1;
+  padding-right: 20px;
+  border-right: 2px solid #ccc;
+}
+
+.shift-info {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
+
+.shift-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.calendar-view {
+  margin-top: 20px;
+}
