@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Switch, Collapse } from '@mui/material';
 import { FaBell, FaLock, FaAngleDown, FaAngleLeft, FaAngleRight, FaAngleDoubleDown } from 'react-icons/fa';
 import '../CssComponents/Setting.css';
+import { useNavigate } from 'react-router-dom';
 
 const Setting = () => {
   const [notificationsOpen, setNotificationsOpen] = useState(true);
@@ -11,6 +12,11 @@ const Setting = () => {
 
   const toggleNotificationsOpen = () => {
     setNotificationsOpen(!notificationsOpen);
+  };
+  const navigate = useNavigate();
+    
+  const changePassword = () => {       
+      navigate('/changepassword');
   };
 
   return (
@@ -60,7 +66,7 @@ const Setting = () => {
             <FaLock />
             <span>Change Password</span>
           </div>
-          <FaAngleRight className="toggle-icon" />
+          <FaAngleRight className="toggle-icon" onClick={changePassword}/>
         </div>
       </div>
     </div>
