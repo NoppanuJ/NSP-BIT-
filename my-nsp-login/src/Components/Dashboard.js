@@ -1,8 +1,30 @@
 import React from 'react';
 import { FaHome, FaCalendarAlt, FaClipboardList, FaBell, FaUserCircle, FaCaretDown, FaThLarge } from 'react-icons/fa';
 import '../CssComponents/Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+    
+    const home = () => {       
+        navigate('/dashboard');
+    };
+    const schedule = () => {       
+        navigate('/schedule');
+
+    };
+    const request = () => {       
+        navigate('/shiftrequest');
+
+    };
+    const notification = () => {       
+        navigate('/notification');
+
+    };
+    const ProfileDisplay = () => {       
+        navigate('/profiledisplay');
+
+    };
     return (
         <div className="dashboard-container">
             <aside className="sidebar">
@@ -12,21 +34,21 @@ const Dashboard = () => {
                 </div>
                 <nav className="sidebar-menu">
                     <div className="menu-item">
-                        <FaHome /> Home
+                        <FaHome onClick={home}/> Home
                     </div>
                     <div className="menu-item">
-                        <FaCalendarAlt /> Schedule
+                        <FaCalendarAlt onClick={schedule}/> Schedule
                     </div>
                     <div className="menu-item">
-                        <FaClipboardList /> Request
+                        <FaClipboardList onClick={request}/> Request
                     </div>
                 </nav>
             </aside>
 
             <main className="dashboard-main">
                 <header className="dashboard-header">
-                    <FaBell className="header-icon" />
-                    <FaUserCircle className="header-icon" />
+                    <FaBell onClick={notification} className="header-icon" />
+                    <FaUserCircle onClick={ProfileDisplay} className="header-icon" />
                 </header>
                 <div className="dashboard-content">
                     <div className="announcement-section">
