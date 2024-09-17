@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { TextField, MenuItem, Button, RadioGroup, Radio, FormControlLabel } from '@mui/material';
+import { TextField, MenuItem, Button, RadioGroup, Radio, FormControlLabel, Autocomplete } from '@mui/material';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../CssComponents/ShiftRequest.css';
 
@@ -13,11 +13,17 @@ const ShiftRequest = () => {
   const [selectedShift, setSelectedShift] = useState('');
   const [reason, setReason] = useState('');
 
-  const nurses = ['John Doe', 'Jane Smith', 'Michael Lee', 'Emily Davis', 'Robert Brown'];
+  const nurses = [
+    {label : 'John Doe'}, 
+    {label : 'Jane Smith'}, 
+    {label : 'Michael Lee'}, 
+    {label :'Emily Davis'}, 
+    {label : 'Robert Brown'}
+  ];
 
-  const filteredNurses = nurses.filter((nurse) =>
-    nurse.toLowerCase().includes(nurseSearch.toLowerCase())
-  );
+  // const filteredNurses = nurses.filter((nurse) =>
+  //   nurse.toLowerCase().includes(nurseSearch.toLowerCase())
+  // );
 
   const shifts = ['Morning Shift', 'Afternoon Shift', 'Night Shift'];
 
@@ -63,9 +69,17 @@ const ShiftRequest = () => {
 
         {requestType === 'shiftTrading' && (
           <>
-            <div className="form-group">
-              <label>Select nurse</label>
-              <TextField
+            <div >
+              <label style = {{display : 'flex', justifyContent : 'start'}}>Select nurse</label>
+              <Autocomplete
+                disablePortal
+                options={nurses}
+                sx={{ width: 300, mb: 2 }}
+                renderInput={(params) => <TextField {...params} label="Movie" />}
+                size = 'small'
+              />
+
+              {/* <TextField
                 type="text"
                 placeholder="Search nurse"
                 value={nurseSearch}
@@ -85,10 +99,10 @@ const ShiftRequest = () => {
                     {nurse}
                   </MenuItem>
                 ))}
-              </TextField>
+              </TextField> */}
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>Select shift</label>
               <TextField
                 select
@@ -104,7 +118,7 @@ const ShiftRequest = () => {
                   </MenuItem>
                 ))}
               </TextField>
-            </div>
+            </div> */}
           </>
         )}
 
