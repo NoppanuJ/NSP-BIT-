@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import { TextField, MenuItem, Button, RadioGroup, Radio, FormControlLabel, Autocomplete } from '@mui/material';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../CssComponents/ShiftRequest.css';
+import { useNavigate } from 'react-router-dom';
 
 const ShiftRequest = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -40,7 +41,11 @@ const ShiftRequest = () => {
     console.log('Shift request submitted:', shiftRequestData);
     // You can now send this data to your backend via an API request.
   };
-
+  const navigate = useNavigate();
+    
+  const submit = () => {       
+      navigate('/shiftrequestconfirmation');
+  };
   return (
     <div className="shift-request-container">
       <h1>Shift Request</h1>
@@ -75,7 +80,7 @@ const ShiftRequest = () => {
                 disablePortal
                 options={nurses}
                 sx={{ width: 300, mb: 2 }}
-                renderInput={(params) => <TextField {...params} label="Movie" />}
+                renderInput={(params) => <TextField {...params} label="Select Nurse" />}
                 size = 'small'
               />
 
@@ -156,7 +161,7 @@ const ShiftRequest = () => {
           />
         </div>
 
-        <Button type="submit" variant="contained" color="success" className="submit-button">
+        <Button type="submit" variant="contained" color="success" className="submit-button" onClick={submit}>
           Submit
         </Button>
       </form>
