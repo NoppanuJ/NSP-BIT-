@@ -1,7 +1,13 @@
 import React from 'react';
 import '../CssComponents/ShiftRequestConfirmation.css';
+import { useNavigate } from 'react-router-dom';
 
 const ShiftRequestConfirmation = () => {
+    const navigate = useNavigate();
+    
+    const dashboard = () => {       
+        navigate('/dashboard');
+    };
     return (
         <div className="confirmation-container">
             <div className="confirmation-content">
@@ -33,7 +39,7 @@ const ShiftRequestConfirmation = () => {
                         />
                     </svg>
                 </div>
-                <button className="back-button">Back to Dashboard</button>
+                <button className="back-button" onClick={dashboard}>Back to Dashboard </button>
             </div>
         </div>
     );
