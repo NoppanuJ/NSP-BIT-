@@ -1,20 +1,23 @@
 .schedule-container {
   display: flex;
   padding: 20px;
-  height: 100vh;
 }
 
 .left-panel {
   flex: 1;
   padding-right: 20px;
   border-right: 2px solid #ccc;
+  text-align: left;
+}
+
+.right-panel {
+  flex: 1;
+  padding-left: 20px;
+  text-align: center;
 }
 
 .shift-info {
   margin-top: 20px;
-  padding: 10px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
 }
 
 .shift-dot {
@@ -25,6 +28,6 @@
   margin-right: 5px;
 }
 
-.calendar-view {
-  margin-top: 20px;
+.calendar-header {
+  margin-bottom: 20px;
 }
