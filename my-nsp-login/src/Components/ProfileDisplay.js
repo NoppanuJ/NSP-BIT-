@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Avatar, Button, IconButton } from '@mui/material';
 import { PhotoCamera } from '@mui/icons-material';
 import '../CssComponents/ProfileDisplay.css';
+import { useNavigate } from 'react-router-dom';
+import ProfileEdit from './ProfileEdit';
 
 const ProfileDisplay = () => {
   const [profile, setProfile] = useState({
@@ -23,11 +25,15 @@ const ProfileDisplay = () => {
     }
   };
 
-  const handleEditProfile = () => {
-    console.log('Navigate to Edit Profile');
-    // Logic to navigate to the edit profile page
+  // const handleEditProfile = () => {
+  //   console.log('Navigate to Edit Profile');
+  //   // Logic to navigate to the edit profile page
+  // };
+  const navigate = useNavigate();
+    
+  const EditProfile = () => {       
+      navigate('/profileedit');
   };
-
   return (
     <div className="profile-display-container">
       <div className="profile-picture">
@@ -77,7 +83,7 @@ const ProfileDisplay = () => {
         </div>
       </div>
       
-      <Button variant="contained" color="primary" className="edit-button" onClick={handleEditProfile}>
+      <Button variant="contained" color="primary" className="edit-button" onClick={EditProfile}>
         Edit Profile
       </Button>
     </div>
