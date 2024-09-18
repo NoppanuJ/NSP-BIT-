@@ -2,7 +2,7 @@
   padding: 20px;
   background-color: #f0f0f0;
   height: 100vh;
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;  
 }
 
 h1 {
@@ -15,7 +15,7 @@ h1 {
   background-color: #d3d3d3;
   padding: 15px;
   margin-bottom: 20px;
-  border-radius: 8px;
+  border-radius: 8px; 
 }
 
 .setting-header {
@@ -27,6 +27,7 @@ h1 {
   padding: 10px;
   background-color: #b0b0b0;
   border-radius: 8px;
+  font-weight: bold;
 }
 
 .setting-header-title {
