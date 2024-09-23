@@ -22,7 +22,7 @@
 }
 
 .signup-form input {
-    width: 100%;
+    width: 100%; 
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -34,21 +34,29 @@
 .password-group {
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 5px;
     background-color: #fafafa;
+    width: 100%; /* Ensure it takes up the full width */
+    box-sizing: border-box;
 }
 
 .password-group input {
     flex: 1;
+    padding: 10px;
     border: none;
     outline: none;
     background-color: transparent;
+    margin: 0; /* Remove any default margin */
 }
 
 .password-group span {
     cursor: pointer;
+    padding: 0 10px; /* Adjust padding for eye icon */
+    display: flex;
+    align-items: center; /* Ensure eye icon is vertically centered */
+    height: 100%; /* Make sure it takes the full height of the input */
 }
 
 .signup-button {
@@ -61,4 +69,9 @@
     font-weight: bold;
     cursor: pointer;
     margin-top: 20px;
+}
+/* This rule ensures that only the intended eye icon is displayed */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none !important; /* Hides the unwanted default icons */
 }
