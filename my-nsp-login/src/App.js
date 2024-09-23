@@ -14,6 +14,7 @@ import ShiftRequestConfirmation from './Components/ShiftRequestConfirmation';
 import Schedule from './Components/Schedule';
 import Header from './Components/header';
 import SideBar from './Components/sideBar';
+import AdminMain from './Components/AdminMain';
 
 const App = () => {
     const [bar, setBar] = useState(false);
@@ -30,8 +31,10 @@ const AppContent = ({ setBar, bar }) => {
 
     return (
         <>
-            {location.pathname !== '/' && location.pathname !== '/signup' && <Header setBar={setBar} bar={bar} />}
-            {location.pathname !== '/' && location.pathname !== '/signup' && <SideBar bar={bar} setBar={setBar} />}
+            {location.pathname !== '/' && location.pathname !== '/signup' && location.pathname !== '/adminmain' && <Header setBar={setBar} bar={bar} />}
+            {location.pathname !== '/' && location.pathname !== '/signup' && location.pathname !== '/adminmain' &&<SideBar bar={bar} setBar={setBar} />}
+
+
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
@@ -44,6 +47,7 @@ const AppContent = ({ setBar, bar }) => {
                 <Route path="/shiftrequest" element={<ShiftRequest />} />
                 <Route path="/shiftrequestconfirmation" element={<ShiftRequestConfirmation />} />
                 <Route path="/schedule" element={<Schedule />} />
+                <Route path="/adminmain" element={<AdminMain />} />
             </Routes>
         </>
     );
