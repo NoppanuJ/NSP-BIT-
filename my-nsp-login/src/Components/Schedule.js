@@ -99,7 +99,7 @@ const Schedule = () => {
             onChange={handleDateChange}
             renderDay={renderPickerDay}
             sx={{
-              transform: 'scale(3.5)',  // ค่าเริ่มต้นสำหรับหน้าจอใหญ่
+              transform: 'scale(2.0)',  // ค่าเริ่มต้นสำหรับหน้าจอใหญ่
               transformOrigin: 'top',  // ตั้งจุดขยายที่ด้านบน
               '@media (max-width: 1500px)': {  // เมื่อหน้าจอเล็กกว่า 1200px
                 transform: 'scale(2)',  // ลดขนาดการขยายลง
