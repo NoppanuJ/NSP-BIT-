@@ -47,34 +47,34 @@ const Schedule = () => {
 
     return (
       <Box>
-        <Typography variant="h6" sx={{ color: '#0E46A3', fontWeight: 'bold' }}> {/* Today's date in #0E46A3 */}
+        <Typography variant="h4" sx={{ color: '#0E46A3', fontWeight: 'bold' }}> {/* Today's date in #0E46A3 */}
           Today {selectedDate.format('DD/MM/YY')}
         </Typography>
         {todayShift ? (
           <>
-            <div>
+            <div style={{ fontSize: '25px' }}>
               <span className="shift-dot" style={{ backgroundColor: todayShift.color }}></span>
               {todayShift.shiftName}
             </div>
-            <div>{todayShift.time}</div>
+            <div style={{ fontSize: '20px' }}>{todayShift.time}</div>
           </>
         ) : (
-          <Typography>No shifts scheduled today.</Typography>
+          <Typography variant='h5'>No shifts scheduled today.</Typography>
         )}
 
-        <Typography variant="h6" sx={{ color: '#505050', fontWeight: 'bold' }} mt={2}> {/* Tomorrow's date in dark grey */}
+        <Typography variant="h4" sx={{ color: '#505050', fontWeight: 'bold' }} mt={2}> {/* Tomorrow's date in dark grey */}
           Tomorrow {selectedDate.add(1, 'day').format('DD/MM/YY')}
         </Typography>
         {tomorrowShift ? (
           <>
-            <div>
+            <div style={{ fontSize: '25px' }}>
               <span className="shift-dot" style={{ backgroundColor: tomorrowShift.color }}></span>
               {tomorrowShift.shiftName}
             </div>
-            <div>{tomorrowShift.time}</div>
+            <div style={{ fontSize: '20px' }}>{tomorrowShift.time}</div>
           </>
         ) : (
-          <Typography>No shifts scheduled tomorrow.</Typography>
+          <Typography variant='h5'>No shifts scheduled tomorrow.</Typography>
         )}
       </Box>
     );
@@ -83,22 +83,33 @@ const Schedule = () => {
   return (
     <div className="schedule-container">
       <div className="left-panel">
-        <Typography variant="h4" sx={{ fontWeight: 'bold' }}> {/* Month in bold black */}
+        <Typography variant="h2" sx={{ fontWeight: 'bold' }}> {/* Month in bold black */}
           <span style={{ color: 'black' }}>{selectedDate.format('MMMM')}</span>
           <span style={{ color: 'Red' }}> {selectedDate.format('YYYY')}</span> {/* Year in bold red */}
         </Typography>
         {renderShiftInfo()}
       </div>
 
-      <div className="right-panel">
-        <Typography variant="h5" className="calendar-header">Calendar</Typography>
+      <div className="right-panel" >
+        <Typography variant="h3" className="calendar-header">Calendar</Typography>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateCalendar
             value={selectedDate}
             onChange={handleDateChange}
             renderDay={renderPickerDay}
+            sx={{
+              transform: 'scale(3.5)',  // ค่าเริ่มต้นสำหรับหน้าจอใหญ่
+              transformOrigin: 'top',  // ตั้งจุดขยายที่ด้านบน
+              '@media (max-width: 1500px)': {  // เมื่อหน้าจอเล็กกว่า 1200px
+                transform: 'scale(2)',  // ลดขนาดการขยายลง
+              },
+              '@media (max-width: 1200px)': {  // เมื่อหน้าจอเล็กกว่า 900px
+                transform: 'scale(1)',  // ลดขนาดการขยายลงอีก
+              },
+            }}
           />
+
         </LocalizationProvider>
       </div>
     </div>
