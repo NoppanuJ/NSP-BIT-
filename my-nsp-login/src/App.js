@@ -1,42 +1,52 @@
 import React, { useState } from 'react';
-import { FaUser, FaLock } from 'react-icons/fa';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
-import logowebp from './nsp-logo.png'
-import Login from './Components/Login'
-import Dashboard from './Components/Dashboard'
-import Signup from './Components/Signup'
-import Setting from './Components/Setting'
-import ProfileDisplay from './Components/ProfileDisplay'
-import ProfileEdit from './Components/ProfileEdit'
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+
+import Login from './Components/Login';
+import Dashboard from './Components/Dashboard';
+import Signup from './Components/Signup';
+import Setting from './Components/Setting';
+import ProfileDisplay from './Components/ProfileDisplay';
+import ProfileEdit from './Components/ProfileEdit';
 import ChangePassword from './Components/ChangePassword';
 import Notification from './Components/Notification';
 import ShiftRequest from './Components/ShiftRequest';
 import ShiftRequestConfirmation from './Components/ShiftRequestConfirmation';
 import Schedule from './Components/Schedule';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './Components/header';
+import SideBar from './Components/sideBar';
+
 const App = () => {
+    const [bar, setBar] = useState(false);
+
     return (
         <Router>
+            <AppContent setBar={setBar} bar={bar} />
+        </Router>
+    );
+};
+
+const AppContent = ({ setBar, bar }) => {
+    const location = useLocation(); // Get the current path
+
+    return (
+        <>
+            {location.pathname !== '/' && location.pathname !== '/signup' && <Header setBar={setBar} bar={bar} />}
+            {location.pathname !== '/' && location.pathname !== '/signup' && <SideBar bar={bar} setBar={setBar} />}
             <Routes>
                 <Route path="/" element={<Login />} />
-                <Route path="/dashboard" element={<Dashboard />} /> {/*Dashboard */}
-                <Route path="/signup" element={<Signup />} /> {/*Signup */}
-                <Route path="/setting" element={<Setting />} /> {/*Setting */}
-                <Route path="/profiledisplay" element={<ProfileDisplay />} /> {/*ProfileDisplay */}
-                <Route path="/profileedit" element={<ProfileEdit />} /> {/*ProfileEdit */}
-                <Route path="/changepassword" element={<ChangePassword />} /> {/*ChangePassword */}
-                <Route path="/notification" element={<Notification />} /> {/*Notification */}
-                <Route path="/shiftrequest" element={<ShiftRequest />} /> {/*ShiftRequest */}
-                <Route path="/shiftrequestconfirmation" element={<ShiftRequestConfirmation />} /> {/*ShiftRequestConfirmation */}
-                <Route path="/schedule" element={<Schedule />} /> {/*Schedule */}
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/setting" element={<Setting />} />
+                <Route path="/profiledisplay" element={<ProfileDisplay />} />
+                <Route path="/profileedit" element={<ProfileEdit />} />
+                <Route path="/changepassword" element={<ChangePassword />} />
+                <Route path="/notification" element={<Notification />} />
+                <Route path="/shiftrequest" element={<ShiftRequest />} />
+                <Route path="/shiftrequestconfirmation" element={<ShiftRequestConfirmation />} />
+                <Route path="/schedule" element={<Schedule />} />
             </Routes>
-        </Router>
-        
-        // <Login />
-        // Hello world/>
-    )
-
-
+        </>
+    );
 };
 
 export default App;
