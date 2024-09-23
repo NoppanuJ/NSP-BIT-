@@ -1,5 +1,6 @@
 .schedule-container {
   display: flex;
+  height: 100vh; /* Set the container to fill the full height of the viewport */
   padding: 20px;
 }
 
@@ -8,12 +9,18 @@
   padding-right: 20px;
   border-right: 2px solid #ccc;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers the content vertically */
 }
 
 .right-panel {
   flex: 3;
   padding-left: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers the content vertically */
 }
 
 .shift-info {
