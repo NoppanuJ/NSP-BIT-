@@ -4,6 +4,7 @@ import { TextField, MenuItem, Button, RadioGroup, Radio, FormControlLabel, Autoc
 import 'react-datepicker/dist/react-datepicker.css';
 import '../CssComponents/ShiftRequest.css';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ShiftRequest = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -44,7 +45,12 @@ const ShiftRequest = () => {
   const navigate = useNavigate();
     
   const submit = () => {       
-      navigate('/shiftrequestconfirmation');
+      // navigate('/shiftrequestconfirmation');
+      Swal.fire({
+        title: "SUCCESS",
+        text: "Request Submitted Successfully",
+        icon: "success"
+      });
   };
   return (
     <div className="shift-request-container">

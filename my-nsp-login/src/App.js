@@ -18,6 +18,7 @@ import AdminMain from './Components/AdminMain';
 
 const App = () => {
     const [bar, setBar] = useState(false);
+    const [role, setRole] = useState('');
 
     return (
         <Router>
@@ -31,8 +32,21 @@ const AppContent = ({ setBar, bar }) => {
 
     return (
         <>
-            {location.pathname !== '/' && location.pathname !== '/signup' && location.pathname !== '/adminmain' && <Header setBar={setBar} bar={bar} />}
-            {location.pathname !== '/' && location.pathname !== '/signup' && location.pathname !== '/adminmain' &&<SideBar bar={bar} setBar={setBar} />}
+            {location.pathname !== '/' && location.pathname !== '/signup' && (
+                location.pathname === '/adminmain' ? (
+                    <Header setBar={setBar} bar={bar} role="admin" />
+                ) : (
+                    <Header setBar={setBar} bar={bar} role="user" />
+                )
+            )}
+
+            {location.pathname !== '/' && location.pathname !== '/signup' && (
+                location.pathname === '/adminmain' ? (
+                    <SideBar bar={bar} setBar={setBar} role="admin" />
+                ) : (
+                    <SideBar bar={bar} setBar={setBar} role="user"/>
+                )
+            )}
 
 
             <Routes>
