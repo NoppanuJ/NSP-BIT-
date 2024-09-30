@@ -19,6 +19,9 @@ import AdminAnnouncement from './Components/AdminAnnoucement';
 import AdminNotification from './Components/AdminNotification';
 import AdminNotification2 from './Components/AdminNotification2';
 import AdminCheckPersonnelList from './Components/AdminCheckPersonnelList';
+import AdminCreateSchedule from './Components/AdminCreateSchedule';
+import AdminResult from './Components/AdminResult';
+
 
 const App = () => {
     const [bar, setBar] = useState(false);
@@ -70,6 +73,8 @@ const AppContent = ({ setBar, bar }) => {
                 <Route path="/adminnotification" element={<AdminNotification />} />
                 <Route path="/adminnotification2" element={<AdminNotification2 />} />
                 <Route path="/admincheckpersonnellist" element={<AdminCheckPersonnelList />} />
+                <Route path="/admincreateschedule" element={<AdminCreateSchedule />} />
+                <Route path="/adminresult" element={<AdminResult />} />
             </Routes>
         </>
     );
