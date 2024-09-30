@@ -15,6 +15,10 @@ import Schedule from './Components/Schedule';
 import Header from './Components/header';
 import SideBar from './Components/sideBar';
 import AdminMain from './Components/AdminMain';
+import AdminAnnouncement from './Components/AdminAnnoucement';
+import AdminNotification from './Components/AdminNotification';
+import AdminNotification2 from './Components/AdminNotification2';
+import AdminCheckPersonnelList from './Components/AdminCheckPersonnelList';
 
 const App = () => {
     const [bar, setBar] = useState(false);
@@ -62,6 +66,10 @@ const AppContent = ({ setBar, bar }) => {
                 <Route path="/shiftrequestconfirmation" element={<ShiftRequestConfirmation />} />
                 <Route path="/schedule" element={<Schedule />} />
                 <Route path="/adminmain" element={<AdminMain />} />
+                <Route path="/adminannoucement" element={<AdminAnnouncement />} />
+                <Route path="/adminnotification" element={<AdminNotification />} />
+                <Route path="/adminnotification2" element={<AdminNotification2 />} />
+                <Route path="/admincheckpersonnellist" element={<AdminCheckPersonnelList />} />
             </Routes>
         </>
     );
