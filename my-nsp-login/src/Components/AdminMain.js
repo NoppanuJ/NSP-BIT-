@@ -25,7 +25,7 @@ const checkpersonnellist = () => {
       <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#d3d3d3' }}>
         <Grid container spacing={15} justifyContent="center" mb={3}>
           <Grid item>
-            <Button variant="contained" startIcon={<FaCalendarAlt />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '200px' }} onClick={createschedule}>
+            <Button variant="contained" startIcon={<FaCalendarAlt />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '250px' }} onClick={createschedule}>
               Create Schedule
             </Button>
           </Grid>
