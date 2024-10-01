@@ -10,7 +10,6 @@ import ProfileEdit from './Components/ProfileEdit';
 import ChangePassword from './Components/ChangePassword';
 import Notification from './Components/Notification';
 import ShiftRequest from './Components/ShiftRequest';
-import ShiftRequestConfirmation from './Components/ShiftRequestConfirmation';
 import Schedule from './Components/Schedule';
 import Header from './Components/header';
 import SideBar from './Components/sideBar';
@@ -40,7 +39,7 @@ const AppContent = ({ setBar, bar }) => {
     return (
         <>
             {location.pathname !== '/' && location.pathname !== '/signup' && (
-                location.pathname === '/adminmain' ? (
+                location.pathname === '/adminmain' || location.pathname === '/admincreateschedule' || location.pathname === '/adminAnnoucement' || location.pathname === '/admincheckpersonnellist' || location.pathname === '/adminnotification' || location.pathname === '/adminnotification2' || location.pathname === '/adminresult' ? (
                     <Header setBar={setBar} bar={bar} role="admin" />
                 ) : (
                     <Header setBar={setBar} bar={bar} role="user" />
@@ -48,7 +47,7 @@ const AppContent = ({ setBar, bar }) => {
             )}
 
             {location.pathname !== '/' && location.pathname !== '/signup' && (
-                location.pathname === '/adminmain' ? (
+                location.pathname === '/adminmain' || location.pathname === '/admincreateschedule' || location.pathname === '/adminAnnoucement' || location.pathname === '/admincheckpersonnellist' || location.pathname === '/adminnotification' || location.pathname === '/adminnotification2' || location.pathname === '/adminresult' ? (
                     <SideBar bar={bar} setBar={setBar} role="admin" />
                 ) : (
                     <SideBar bar={bar} setBar={setBar} role="user"/>
@@ -66,7 +65,6 @@ const AppContent = ({ setBar, bar }) => {
                 <Route path="/changepassword" element={<ChangePassword />} />
                 <Route path="/notification" element={<Notification />} />
                 <Route path="/shiftrequest" element={<ShiftRequest />} />
-                <Route path="/shiftrequestconfirmation" element={<ShiftRequestConfirmation />} />
                 <Route path="/schedule" element={<Schedule />} />
                 <Route path="/adminmain" element={<AdminMain />} />
                 <Route path="/adminannoucement" element={<AdminAnnouncement />} />
