@@ -1,40 +1,46 @@
 import React from 'react';
 import { Box, Typography, Button, Paper, Grid, IconButton } from '@mui/material';
 import { FaCalendarAlt, FaBullhorn, FaBell, FaUserNurse } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const AdminMain = () => {
+  const navigate = useNavigate();
+
+  const createschedule = () => {
+    navigate('/admincreateschedule');
+};
+const createannoucement = () => {
+  navigate('/adminAnnoucement');
+};
+const sendnotification = () => {
+  navigate('/adminnotification');
+};
+const checkpersonnellist = () => {
+  navigate('/admincheckpersonnellist');
+};
   return (
     <Box sx={{ backgroundColor: '#f0f0f0', minHeight: '100vh', padding: 3 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" fontWeight="bold">
-          Admin
-        </Typography>
-        <Typography variant="h6">NSP System V.1</Typography>
-        <Typography variant="h6">System Time: 19:30</Typography>
-        <IconButton>
-          <FaUserNurse size={30} />
-        </IconButton>
-      </Box>
+      
 
       <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#d3d3d3' }}>
         <Grid container spacing={15} justifyContent="center" mb={3}>
           <Grid item>
-            <Button variant="contained" startIcon={<FaCalendarAlt />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '200px' }}>
+            <Button variant="contained" startIcon={<FaCalendarAlt />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '200px' }} onClick={createschedule}>
               Create Schedule
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" startIcon={<FaBullhorn />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '200px' }}>
+            <Button variant="contained" startIcon={<FaBullhorn />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '250px' }} onClick={createannoucement}>
               Create Announcement
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" startIcon={<FaBell />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '200px' }}>
+            <Button variant="contained" startIcon={<FaBell />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '250px' }} onClick={sendnotification}>
               Send Notifications
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" startIcon={<FaUserNurse />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '200px' }}>
+            <Button variant="contained" startIcon={<FaUserNurse />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '250px' }} onClick={checkpersonnellist}>
               Check Personnel List
             </Button>
           </Grid>
