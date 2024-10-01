@@ -3,6 +3,7 @@ import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const AdminNotification = () => {
     const notifications = [
@@ -32,7 +33,25 @@ const AdminNotification = () => {
     const adminnotification2 = () => {
         navigate('/adminnotification2');
     };
-
+    const Deleted = () => {       
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+            }
+          });
+    };
     return (
         <Box sx={{ padding: 4, backgroundColor: '#f0f0f0', height: '100vh' }}>
             <Box sx={{ padding: 2, backgroundColor: '#e0e0e0', borderRadius: 1 }}>
@@ -47,7 +66,7 @@ const AdminNotification = () => {
                     <IconButton sx={{ backgroundColor: 'blue', color: 'white', marginRight: 1 }}  onClick={adminnotification2}>
                         <AddIcon />
                     </IconButton>
-                    <IconButton sx={{ backgroundColor: 'red', color: 'white' }}>
+                    <IconButton sx={{ backgroundColor: 'red', color: 'white' }} onClick={Deleted}>
                         <DeleteIcon />
                     </IconButton>
                 </Box>
