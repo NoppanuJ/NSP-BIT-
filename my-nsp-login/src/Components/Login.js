@@ -6,7 +6,7 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import '../CssComponents/Login.css'; // You'll need to create this file for your styles
 import logowebp from '../nsp-logo.png'
 import { useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -24,12 +24,27 @@ const Login = () => {
     const signIn = () => {
         console.log (username)
         navigate('/dashboard');
-
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Signed in successfully"
+          });
     };
     const signUp = () => {
         console.log (username)
         navigate('/signup');
     };
+   
 
     return (
         <div className="login-container">
