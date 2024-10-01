@@ -2,6 +2,7 @@ import React from 'react';
 import { FaHome, FaCalendarAlt, FaClipboardList } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import '../CssComponents/Dashboard.css';
+import AdminMain from './AdminMain';
 
 const SideBar = ({ bar, setBar, role }) => {
     const navigate = useNavigate();
@@ -17,9 +18,13 @@ const SideBar = ({ bar, setBar, role }) => {
         navigate('/shiftrequest');
         setBar(false);
     };
+    const homeAdmin = () =>{
+        navigate('/adminmain')
+        setBar(false)
+    }
     return (
         <>
-           {role === "user" ? ( <aside className="sidebar" style={{ display: bar ? 'block' : 'none', position: 'absolute', height: '100%' }}>
+            {role === "user" ? (<aside className="sidebar" style={{ display: bar ? 'block' : 'none', position: 'absolute', height: '100%' }}>
                 <nav className="sidebar-menu">
                     <div className="menu-item" onClick={home}>
                         <FaHome /> Home
@@ -31,14 +36,19 @@ const SideBar = ({ bar, setBar, role }) => {
                         <FaClipboardList /> Request
                     </div>
                 </nav>
-        </aside >
-           ) : (
+            </aside >
+            ) : (
 
-            <h1>Admin Sidebar</h1>
-
-           )}
+                <aside className="sidebar" style={{ display: bar ? 'block' : 'none', position: 'absolute', height: '100%', zIndex : '100000' }}>
+                    <nav className="sidebar-menu">
+                        <div className="menu-item" onClick={homeAdmin}>
+                            <FaHome /> Home
+                        </div>
+                    </nav>
+                </aside >
+            )}
         </>
-  )
+    )
 }
 
 export default SideBar
