@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 
 const AdminNotification = () => {
     const notifications = [
@@ -26,6 +27,11 @@ const AdminNotification = () => {
             dateAdded: "14/09/2024"
         }
     ];
+    const navigate = useNavigate();
+
+    const adminnotification2 = () => {
+        navigate('/adminnotification2');
+    };
 
     return (
         <Box sx={{ padding: 4, backgroundColor: '#f0f0f0', height: '100vh' }}>
@@ -38,7 +44,7 @@ const AdminNotification = () => {
                 </Typography>
 
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-                    <IconButton sx={{ backgroundColor: 'blue', color: 'white', marginRight: 1 }}>
+                    <IconButton sx={{ backgroundColor: 'blue', color: 'white', marginRight: 1 }}  onClick={adminnotification2}>
                         <AddIcon />
                     </IconButton>
                     <IconButton sx={{ backgroundColor: 'red', color: 'white' }}>
