@@ -27,7 +27,7 @@ const AdminSendNotification = () => {
     };
 
     return (
-        <Box sx={{ padding: 4, backgroundColor: '#f0f0f0', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box sx={{ padding: 4, backgroundColor: '#f0f0f0', height: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Box sx={{ padding: 3, backgroundColor: '#e0e0e0', borderRadius: 2, minWidth: '600px' }}>
                 <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1 }}>
                     Send Notifications
