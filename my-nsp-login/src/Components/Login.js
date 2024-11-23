@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import '../CssComponents/Login.css'; // You'll need to create this file for your styles
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -20,10 +21,32 @@ const Login = () => {
         setUsername(event.target.value); // อัปเดตค่า state
     };
 
+    const handleChangePassword = (event) => {
+        setPassword(event.target.value); // อัปเดตค่า state
+    };
+    function base64Encode(str) {
+        return btoa(str); // Encode string to Base64
+      }
+      
+
 
     const signIn = () => {
         console.log (username)
+        console.log(password)
+
+        if (username === "" || password === "") {
+            alert("Please enter both username and password.");
+            return;
+        }
+        
+          // Save user in localStorage (in a real application, validate against a backend)
+          
+        localStorage.setItem("loggedInUser", base64Encode(username));
+
+        //navigate to dashboard page
         navigate('/dashboard');
+
+        //popup login
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -41,9 +64,16 @@ const Login = () => {
           });
     };
     const signUp = () => {
-        console.log (username)
+        // console.log (username)
         navigate('/signup');
     };
+
+    useEffect(() => {   
+        const loggedInUser = localStorage.getItem("loggedInUser");
+        if (loggedInUser) {
+            navigate('/dashboard');
+        }
+    }, []);
    
 
     return (
@@ -61,6 +91,8 @@ const Login = () => {
                     <FaLock />
                     <input
                         type={showPassword ? "text" : "password"}
+                        value={password} 
+                        onChange={handleChangePassword}
                         placeholder="Password"
                     />
                     <span onClick={togglePasswordVisibility}>

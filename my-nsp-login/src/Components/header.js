@@ -24,6 +24,7 @@ const Header = ({ setBar, bar, role }) => {
         navigate('/setting');
     };
     const logout = () => {
+        localStorage.removeItem('loggedInUser');
         navigate('/');
     };
 
