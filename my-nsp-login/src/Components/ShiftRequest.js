@@ -83,22 +83,28 @@ const ShiftRequest = () => {
           </div>
         )}
 
-        <div className="form-group">
+        <div style={{marginBottom: '20px', textAlign : 'left'}}>
           <label>Date</label>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              value={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  fullWidth
-                  placeholder="Select Date"
-                  size="small"
-                />
-              )}
-            />
-          </LocalizationProvider>
+                    <DatePicker
+                        slotProps={{
+                            textField: {
+                                sx: {
+                                    '& .MuiInputBase-root': {
+                                        height: '40px', // ลดความสูง
+                                        width: '200px',
+                                        fontSize: '0.9rem', // ลดขนาดตัวอักษรใน Input
+                                        marginBottom: '1rem',
+                                        backgroundColor: '#fafafa'
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        fontSize: '0.8rem', // ลดขนาด Label
+                                    },
+                                },
+                            },
+                        }}
+                    />
+                </LocalizationProvider>
         </div>
 
         <div className="form-group">

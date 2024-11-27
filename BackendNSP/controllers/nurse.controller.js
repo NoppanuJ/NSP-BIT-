@@ -9,11 +9,6 @@ exports.getAllNurses = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-exports.getHello = async (req, res) => {
-  res.send('Hello from the backend!');
-};
-
 // Create a new nurse
 // exports.createNurse = async (req, res) => {
 //   try {
@@ -24,3 +19,5 @@ exports.getHello = async (req, res) => {
 //     res.status(400).json({ message: err.message });
 //   }
 // };
+;
+

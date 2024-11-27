@@ -21,7 +21,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.signup-form input {
+.signup-form .input {
     width: 100%; 
     padding: 10px;
     margin-bottom: 15px;
