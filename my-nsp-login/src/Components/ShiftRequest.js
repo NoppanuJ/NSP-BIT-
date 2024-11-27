@@ -1,57 +1,46 @@
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
 import { TextField, MenuItem, Button, RadioGroup, Radio, FormControlLabel, Autocomplete } from '@mui/material';
-import 'react-datepicker/dist/react-datepicker.css';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/en'; // Import the locale if needed
 import '../CssComponents/ShiftRequest.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const ShiftRequest = () => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState('');
   const [requestType, setRequestType] = useState('scheduleChange');
-  const [selectedNurse, setSelectedNurse] = useState('');
-  const [nurseSearch, setNurseSearch] = useState('');
-  const [selectedShift, setSelectedShift] = useState('');
   const [reason, setReason] = useState('');
 
+  const navigate = useNavigate();
+
   const nurses = [
-    {label : 'John Doe'}, 
-    {label : 'Jane Smith'}, 
-    {label : 'Michael Lee'}, 
-    {label :'Emily Davis'}, 
-    {label : 'Robert Brown'}
+    { label: 'John Doe' },
+    { label: 'Jane Smith' },
+    { label: 'Michael Lee' },
+    { label: 'Emily Davis' },
+    { label: 'Robert Brown' },
   ];
-
-  // const filteredNurses = nurses.filter((nurse) =>
-  //   nurse.toLowerCase().includes(nurseSearch.toLowerCase())
-  // );
-
-  const shifts = ['Morning Shift', 'Afternoon Shift', 'Night Shift'];
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const shiftRequestData = {
       requestType,
-      nurse: selectedNurse,
-      shift: selectedShift,
       date: selectedDate,
-      time: selectedTime,
       reason,
     };
     console.log('Shift request submitted:', shiftRequestData);
     // You can now send this data to your backend via an API request.
   };
-  const navigate = useNavigate();
-    
-  const submit = () => {       
-      // navigate('/shiftrequestconfirmation');
-      Swal.fire({
-        title: "SUCCESS",
-        text: "Request Submitted Successfully",
-        icon: "success"
-      });
+
+  const submit = () => {
+    Swal.fire({
+      title: 'SUCCESS',
+      text: 'Request Submitted Successfully',
+      icon: 'success',
+    });
   };
+
   return (
     <div className="shift-request-container">
       <h1>Shift Request</h1>
@@ -79,81 +68,37 @@ const ShiftRequest = () => {
         </div>
 
         {requestType === 'shiftTrading' && (
-          <>
-            <div >
-              <label style = {{display : 'flex', justifyContent : 'start'}}>Select nurse</label>
-              <Autocomplete
-                disablePortal
-                options={nurses}
-                sx={{ width: 300, mb: 2 }}
-                renderInput={(params) => <TextField {...params} label="Select Nurse" />}
-                size = 'small'
-              />
-
-              {/* <TextField
-                type="text"
-                placeholder="Search nurse"
-                value={nurseSearch}
-                onChange={(e) => setNurseSearch(e.target.value)}
-                fullWidth
-              />
-              <TextField
-                select
-                fullWidth
-                value={selectedNurse}
-                onChange={(e) => setSelectedNurse(e.target.value)}
-                variant="outlined"
-                placeholder="Select nurse"
-              >
-                {filteredNurses.map((nurse, index) => (
-                  <MenuItem key={index} value={nurse}>
-                    {nurse}
-                  </MenuItem>
-                ))}
-              </TextField> */}
-            </div>
-
-            {/* <div className="form-group">
-              <label>Select shift</label>
-              <TextField
-                select
-                fullWidth
-                value={selectedShift}
-                onChange={(e) => setSelectedShift(e.target.value)}
-                variant="outlined"
-                placeholder="Select shift"
-              >
-                {shifts.map((shift, index) => (
-                  <MenuItem key={index} value={shift}>
-                    {shift}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div> */}
-          </>
+          <div>
+            <label style={{ display: 'flex', justifyContent: 'start' }}>
+              Select nurse
+            </label>
+            <Autocomplete
+              disablePortal
+              options={nurses}
+              sx={{ width: 300, mb: 2 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select Nurse" size="small" />
+              )}
+            />
+          </div>
         )}
 
         <div className="form-group">
           <label>Date</label>
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            dateFormat="yyyy/MM/dd"
-            placeholderText="Select Date"
-            className="datepicker-input"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Time</label>
-          <TextField
-            type="time"
-            value={selectedTime}
-            onChange={(e) => setSelectedTime(e.target.value)}
-            variant="outlined"
-            fullWidth
-            placeholder="Select Time"
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              value={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  fullWidth
+                  placeholder="Select Date"
+                  size="small"
+                />
+              )}
+            />
+          </LocalizationProvider>
         </div>
 
         <div className="form-group">
@@ -167,7 +112,13 @@ const ShiftRequest = () => {
           />
         </div>
 
-        <Button type="submit" variant="contained" color="success" className="submit-button" onClick={submit}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="success"
+          className="submit-button"
+          onClick={submit}
+        >
           Submit
         </Button>
       </form>
