@@ -7,18 +7,19 @@ import '../CssComponents/Login.css'; // You'll need to create this file for your
 import logowebp from '../nsp-logo.png'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleChangeUsername = (event) => {
-        setUsername(event.target.value); // อัปเดตค่า state
+    const handleChangeEmail = (event) => {
+        setEmail(event.target.value); // อัปเดตค่า state
     };
 
     const handleChangePassword = (event) => {
@@ -26,42 +27,46 @@ const Login = () => {
     };
     function base64Encode(str) {
         return btoa(str); // Encode string to Base64
-      }
-      
-
-
+    }
     const signIn = () => {
-        console.log (username)
-        console.log(password)
-
-        if (username === "" || password === "") {
-            alert("Please enter both username and password.");
-            return;
+        const data = {
+            email: email,
+            password: password
         }
-        
-          // Save user in localStorage (in a real application, validate against a backend)
-          
-        localStorage.setItem("loggedInUser", base64Encode(username));
 
-        //navigate to dashboard page
-        navigate('/dashboard');
-
-        //popup login
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
+        axios.post('http://localhost:5001/login', data, {
+            headers: {
+              'Content-Type': 'application/json', // แจ้งว่า request body เป็น JSON
             }
+          })
+          .then(response => {
+            console.log(response.data);
+
+            if(response.data.message === "Login successful"){
+                localStorage.setItem("loggedInUser", base64Encode(email));
+                navigate('/dashboard');
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.onmouseenter = Swal.stopTimer;
+                      toast.onmouseleave = Swal.resumeTimer;
+                    }
+                  });
+                  Toast.fire({
+                    icon: "success",
+                    title: "Signed in successfully"
+                  });
+            }
+          })
+          .catch(error => {
+            console.error(error);
           });
-          Toast.fire({
-            icon: "success",
-            title: "Signed in successfully"
-          });
+          
     };
     const signUp = () => {
         // console.log (username)
@@ -85,7 +90,7 @@ const Login = () => {
                 <div className="input-group">
                     <FaUser />
                     {/* <input type="text" placeholder="Username" /> */}
-                    <input type="text" value={username} onChange={handleChangeUsername} placeholder="Username" />
+                    <input type="text" value={email} onChange={handleChangeEmail} placeholder="Email" />
                 </div>
                 <div className="input-group">
                     <FaLock />

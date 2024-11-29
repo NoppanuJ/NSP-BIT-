@@ -85,7 +85,7 @@ const ShiftRequest = () => {
 
         <div style={{marginBottom: '20px', textAlign : 'left'}}>
           <label>Date</label>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         slotProps={{
                             textField: {
@@ -104,7 +104,7 @@ const ShiftRequest = () => {
                             },
                         }}
                     />
-                </LocalizationProvider>
+            </LocalizationProvider>
         </div>
 
         <div className="form-group">
