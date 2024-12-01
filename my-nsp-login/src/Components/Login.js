@@ -30,56 +30,84 @@ const Login = () => {
     }
     const signIn = () => {
         const data = {
-            email: email,
+            email: email.trim(), // Trim ช่องว่างออกจาก email
             password: password
+        };
+
+        // ตรวจสอบ Input ก่อนส่ง
+        if (!data.email || !data.password) {
+            Swal.fire({
+                icon: "error",
+                title: "Missing Information",
+                text: "Please enter both email and password.",
+            });
+            return;
         }
 
         axios.post('http://localhost:5001/login', data, {
             headers: {
-              'Content-Type': 'application/json', // แจ้งว่า request body เป็น JSON
+                'Content-Type': 'application/json', // แจ้งว่า request body เป็น JSON
             }
-          })
-          .then(response => {
-            console.log(response.data);
+        })
+            .then(response => {
+                console.log(response.data);
 
-            if(response.data.message === "Login successful"){
-                localStorage.setItem("loggedInUser", base64Encode(email));
-                navigate('/dashboard');
+                if (response.data.message === "Login successful") {
+                    // เก็บข้อมูลใน Local Storage (Base64 Encode)
+                    const base64Encode = (str) => btoa(str); // ฟังก์ชันเข้ารหัส Base64
+                    localStorage.setItem("loggedInUser", base64Encode(email));
 
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.onmouseenter = Swal.stopTimer;
-                      toast.onmouseleave = Swal.resumeTimer;
-                    }
-                  });
-                  Toast.fire({
-                    icon: "success",
-                    title: "Signed in successfully"
-                  });
-            }
-          })
-          .catch(error => {
-            console.error(error);
-          });
-          
+                    // เปลี่ยนหน้าไปยัง Dashboard
+                    navigate('/dashboard');
+
+                    // แสดงข้อความสำเร็จ
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Signed in successfully"
+                    });
+                } else {
+                    // แสดงข้อความผิดพลาดจาก Backend
+                    Swal.fire({
+                        icon: "error",
+                        title: "Login Failed",
+                        text: response.data.message || "Something went wrong.",
+                    });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+
+                // แสดงข้อความ Error จาก Backend หรือข้อความ Default
+                Swal.fire({
+                    icon: "error",
+                    title: "Login Failed",
+                    text: error.response?.data?.message || "An error occurred. Please try again.",
+                });
+            });
     };
     const signUp = () => {
         // console.log (username)
         navigate('/signup');
     };
 
-    useEffect(() => {   
+    useEffect(() => {
         const loggedInUser = localStorage.getItem("loggedInUser");
         if (loggedInUser) {
             navigate('/dashboard');
         }
     }, []);
-   
+
 
     return (
         <div className="login-container">
@@ -96,7 +124,7 @@ const Login = () => {
                     <FaLock />
                     <input
                         type={showPassword ? "text" : "password"}
-                        value={password} 
+                        value={password}
                         onChange={handleChangePassword}
                         placeholder="Password"
                     />

@@ -75,3 +75,47 @@ input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
     display: none !important; /* Hides the unwanted default icons */
 }
+
+.input-error {
+    width: 100%; 
+    padding: 10px;
+    /* margin-bottom: 15px; */
+    border: 1px solid red;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fafafa;
+}
+
+.error-text {
+    color: red;
+    font-size: 0.8rem;
+    margin: 5px;
+}
+
+.error-password-group {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: 15px; */
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: #fafafa;
+    width: 100%; /* Ensure it takes up the full width */
+    box-sizing: border-box;
+}
+
+.error-password-group input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin: 0; /* Remove any default margin */
+}
+
+.error-password-group span {
+    cursor: pointer;
+    padding: 0 10px; /* Adjust padding for eye icon */
+    display: flex;
+    align-items: center; /* Ensure eye icon is vertically centered */
+    height: 100%; /* Make sure it takes the full height of the input */
+}
