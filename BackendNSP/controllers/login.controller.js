@@ -63,12 +63,16 @@ exports.signUpUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   console.log(email, password);
+  
   try {
     const user = await Login.findOne({ email });
+    const hashedPassword = user.token;
+    const isMatch = await bcrypt.compare(password, hashedPassword);
+  
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    if (user.token !== password) {
+    if (!isMatch) {
       return res.status(401).json({ message: 'Invalid password' });
     }
     res.status(200).json({ message: 'Login successful' });
