@@ -8,6 +8,8 @@ router.post('/createRequest', nurseController.creatRequest);
 router.post('/createTradeShift', nurseController.createTradeShift);
 router.get('/getrequest', nurseController.getRequest);
 router.get('/getTradeShift', nurseController.getTradeShift);
+router.get('/getNurseByEmail/:email', nurseController.getNurseByEmail);
+router.post('/editProfile', nurseController.editProfile);
 
 module.exports = router;
 

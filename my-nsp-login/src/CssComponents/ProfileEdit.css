@@ -69,3 +69,16 @@ h1 {
     cursor: pointer;
 }
 
+.form-group-error input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.error-text {
+    color: red;
+    font-size: 0.8rem;
+    margin: 5px;
+}

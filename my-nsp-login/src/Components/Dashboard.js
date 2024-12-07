@@ -3,6 +3,7 @@ import { FaHome, FaCalendarAlt, FaClipboardList, FaBell, FaUserCircle, FaCaretDo
 import '../CssComponents/Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 
+
 const Dashboard = () => {
     const [profileDropdown, setProfileDropdown] = useState(false); // State for dropdown visibility
     const [darkMode, setDarkMode] = useState(false); // State for theme
@@ -16,9 +17,9 @@ const Dashboard = () => {
             document.body.classList.add('light-mode');
             document.body.classList.remove('dark-mode');
         }
+
     }, [darkMode]);
   
-
     return (
         <div className="dashboard-container">
             <main className="dashboard-main">

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Button, IconButton } from '@mui/material';
 import { PhotoCamera } from '@mui/icons-material';
 import '../CssComponents/ProfileDisplay.css';
 import { useNavigate } from 'react-router-dom';
 import ProfileEdit from './ProfileEdit';
+import axios from 'axios';
+import moment from "moment";
 
 const ProfileDisplay = () => {
   const [profile, setProfile] = useState({
@@ -17,6 +19,21 @@ const ProfileDisplay = () => {
   });
 
   const [profileImage, setProfileImage] = useState(null);
+  const [nurseData, setNurseData] = useState({});
+  const base64Decode = (base64String) => {
+    const decodedString = atob(base64String);
+    return decodedString;
+  }
+
+  useEffect(() => {
+      const storedEncodedEmail = localStorage.getItem("loggedInUser");
+      const decodedEmail = base64Decode(storedEncodedEmail);
+      console.log(decodedEmail);
+      axios.get(`http://localhost:5001/getNurseByEmail/${decodedEmail}`).then((response) => {
+          console.log(response.data);
+          setNurseData(response.data);
+      })
+  }, []);
 
   const handleProfileImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -32,7 +49,16 @@ const ProfileDisplay = () => {
   const navigate = useNavigate();
     
   const EditProfile = () => {       
-      navigate('/profileedit');
+      const data ={
+          Nurse_ID: nurseData.Nurse_ID,
+          User_First_Name: nurseData.User_First_Name,
+          User_Last_Name: nurseData.User_Last_Name,
+          Sex: nurseData.Sex,
+          Date_of_Birth: nurseData.Date_of_Birth,
+          User_Phone_Number: nurseData.Phone_Number,
+          User_Email: nurseData.User_Email
+      }
+      navigate('/profileedit', { state: data });
   };
   return (
     <div className="profile-display-container">
@@ -54,32 +80,32 @@ const ProfileDisplay = () => {
 
       <div className="profile-info">
         <div className="profile-row">
-          <span>Displayed Name</span>
-          <span>{profile.displayedName}</span>
+          <span>ID Number</span>
+          <span>{nurseData.Nurse_ID}</span>
         </div>
         <div className="profile-row">
           <span>First Name</span>
-          <span>{profile.firstName}</span>
+          <span>{nurseData.User_First_Name}</span>
         </div>
         <div className="profile-row">
           <span>Last Name</span>
-          <span>{profile.lastName}</span>
+          <span>{nurseData.User_Last_Name}</span>
         </div>
         <div className="profile-row">
           <span>Sex</span>
-          <span>{profile.sex}</span>
+          <span>{nurseData.Sex === 'M' ? 'Male' : 'Female'}</span>
         </div>
         <div className="profile-row">
           <span>Date of Birth</span>
-          <span>{profile.dateOfBirth}</span>
+          <span>{moment(nurseData.Date_of_Birth).format('DD/MM/YYYY')}</span>
         </div>
         <div className="profile-row">
           <span>Phone number</span>
-          <span>{profile.phoneNumber}</span>
+          <span>{nurseData.Phone_Number}</span>
         </div>
         <div className="profile-row">
           <span>Email</span>
-          <span>{profile.email}</span>
+          <span>{nurseData.User_Email}</span>
         </div>
       </div>
       

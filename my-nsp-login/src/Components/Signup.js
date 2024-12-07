@@ -131,7 +131,7 @@ const Signup = () => {
                             <ErrorMessage name="lastName" component="div" className="error-text" />
 
                             <FormControl fullWidth size='small' sx={{ marginBottom: errors.gender && touched.gender ? '0' : '1rem' }}>
-                                <InputLabel id="gender-select-label" sx={{ fontSize: '14px' }}>Gender</InputLabel>
+                                <InputLabel id="gender-select-label" sx={{ fontSize: '14px' }}>Sex</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"

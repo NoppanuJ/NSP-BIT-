@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import Login from './Components/Login';
 import Dashboard from './Components/Dashboard';
@@ -20,11 +20,10 @@ import AdminNotification2 from './Components/AdminNotification2';
 import AdminCheckPersonnelList from './Components/AdminCheckPersonnelList';
 import AdminCreateSchedule from './Components/AdminCreateSchedule';
 import AdminResult from './Components/AdminResult';
-
+import axios from 'axios';
 
 const App = () => {
     const [bar, setBar] = useState(false);
-    const [role, setRole] = useState('');
 
     return (
         <Router>
@@ -33,27 +32,84 @@ const App = () => {
     );
 };
 
+const base64Decode = (encodedString) => {
+    const decodedString = atob(encodedString);
+    return decodedString;
+};
+
 const AppContent = ({ setBar, bar }) => {
-    const location = useLocation(); // Get the current path
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [nurseData, setNurseData] = useState([]);
+    const [userRole, setUserRole] = useState(null);
+
+    const roleMapping = {
+        "/dashboard": "user",
+        "/setting": "user",
+        "/profiledisplay": "user",
+        "/profileedit": "user",
+        "/changepassword": "user",
+        "/notification": "user",
+        "/shiftrequest": "user",
+        "/schedule": "user",
+        "/adminmain": "admin",
+        "/adminannoucement": "admin",
+        "/adminnotification": "admin",
+        "/adminnotification2": "admin",
+        "/admincheckpersonnellist": "admin",
+        "/admincreateschedule": "admin",
+        "/adminresult": "admin",
+    };
+
+    useEffect(() => {
+        const storedEncodedEmail = localStorage.getItem("loggedInUser");
+
+        if (!storedEncodedEmail) {
+            console.warn("No loggedInUser found in localStorage. Redirecting to login page...");
+            setUserRole(null);
+            navigate("/");
+            return;
+        }
+
+        try {
+            const decodedEmail = base64Decode(storedEncodedEmail);
+
+            axios.get(`http://localhost:5001/getNurseByEmail/${decodedEmail}`)
+                .then((response) => {
+                    setNurseData(response.data);
+                    const role = response.data?.Role || "user"; // Default to "user" if no role is provided
+                    setUserRole(role);
+                })
+                .catch((error) => {
+                    console.error("Error fetching nurse data:", error);
+                    navigate("/");
+                });
+        } catch (error) {
+            console.error("Error decoding email:", error);
+            navigate("/");
+        }
+    }, []);
+
+    useEffect(() => {
+        const requiredRole = roleMapping[location.pathname];
+        if (userRole && requiredRole && userRole !== requiredRole) {
+            if (userRole === "user") {
+                navigate("/dashboard");
+            } else if (userRole === "admin") {
+                navigate("/adminmain");
+            }
+        }
+    }, [userRole, location.pathname, navigate]);
 
     return (
         <>
             {location.pathname !== '/' && location.pathname !== '/signup' && (
-                location.pathname === '/adminmain' || location.pathname === '/admincreateschedule' || location.pathname === '/adminAnnoucement' || location.pathname === '/admincheckpersonnellist' || location.pathname === '/adminnotification' || location.pathname === '/adminnotification2' || location.pathname === '/adminresult' ? (
-                    <Header setBar={setBar} bar={bar} role="admin" />
-                ) : (
-                    <Header setBar={setBar} bar={bar} role="user" />
-                )
+                <Header setBar={setBar} bar={bar} role={userRole} />
             )}
 
             {location.pathname !== '/' && location.pathname !== '/signup' && (
-                location.pathname === '/adminmain' || location.pathname === '/admincreateschedule' || location.pathname === '/adminAnnoucement' || location.pathname === '/admincheckpersonnellist' || location.pathname === '/adminnotification' || location.pathname === '/adminnotification2' || location.pathname === '/adminresult' ? (
-                    <SideBar bar={bar} setBar={setBar} role="admin" />
-                ) : (
-                    <SideBar bar={bar} setBar={setBar} role="user"/>
-                )
+                <SideBar bar={bar} setBar={setBar} role={userRole} />
             )}
-
 
             <Routes>
                 <Route path="/" element={<Login />} />
