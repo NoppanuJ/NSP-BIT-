@@ -5,17 +5,17 @@ class NurseSchedulingProblem:
     """This class encapsulates the Nurse Scheduling problem
     """
 
-    def __init__(self, hardConstraintPenalty):
+    def __init__(self, hardConstraintPenalty, nurses):
         """
         :param hardConstraintPenalty: the penalty factor for a hard-constraint violation
         """
         self.hardConstraintPenalty = hardConstraintPenalty
 
         # list of nurses:
-        self.nurses = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+        self.nurses = nurses
 
         # nurses' respective shift preferences - morning, evening, night:
-        self.shiftPreference = [[1, 0, 1], [0, 1, 0], [0, 0, 1], [1, 1, 1], [0, 1, 1], [1, 0, 1], [1, 1, 1], [0, 0, 1], [1, 1,0],[0, 1, 1], [1, 0, 0]]
+        self.shiftPreference = [[1, 0, 1], [0, 1, 0], [0, 0, 1], [1, 1, 1], [0, 1, 1], [1, 0, 1], [1, 1, 1], [0, 0, 1], [1, 1,0],[0, 1, 1], [1, 0, 0], [1, 0, 1]]
 
         # min and max number of nurses allowed for each shift - morning, evening, night:
         self.shiftMin = [3, 3, 2]
@@ -180,6 +180,8 @@ class NurseSchedulingProblem:
         shiftPreferenceViolations = self.countShiftPreferenceViolations(nurseShiftsDict)
         print("Shift Preference Violations = ", shiftPreferenceViolations)
         print()
+
+        return nurseShiftsDict 
 
 
 # testing the class:
