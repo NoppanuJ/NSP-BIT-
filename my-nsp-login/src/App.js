@@ -67,7 +67,9 @@ const AppContent = ({ setBar, bar }) => {
         if (!storedEncodedEmail) {
             console.warn("No loggedInUser found in localStorage. Redirecting to login page...");
             setUserRole(null);
-            navigate("/");
+            if (location.pathname !== '/' && location.pathname !== '/signup') {
+               navigate("/");
+            }
             return;
         }
 
@@ -88,7 +90,7 @@ const AppContent = ({ setBar, bar }) => {
             console.error("Error decoding email:", error);
             navigate("/");
         }
-    }, []);
+    }, [roleMapping]);
 
     useEffect(() => {
         const requiredRole = roleMapping[location.pathname];
@@ -104,16 +106,15 @@ const AppContent = ({ setBar, bar }) => {
     return (
         <>
             {location.pathname !== '/' && location.pathname !== '/signup' && (
-                <Header setBar={setBar} bar={bar} role={userRole} />
+                <Header setBar={setBar} bar={bar} role={userRole} pathname={location.pathname} />
             )}
 
             {location.pathname !== '/' && location.pathname !== '/signup' && (
-                <SideBar bar={bar} setBar={setBar} role={userRole} />
+                <SideBar bar={bar} setBar={setBar} role={userRole} pathname={location.pathname} />
             )}
-
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/" element={<Login/>} />
+                <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/setting" element={<Setting />} />
                 <Route path="/profiledisplay" element={<ProfileDisplay />} />
@@ -122,7 +123,7 @@ const AppContent = ({ setBar, bar }) => {
                 <Route path="/notification" element={<Notification />} />
                 <Route path="/shiftrequest" element={<ShiftRequest />} />
                 <Route path="/schedule" element={<Schedule />} />
-                <Route path="/adminmain" element={<AdminMain />} />
+                <Route path="/adminmain" element={<AdminMain/>} />
                 <Route path="/adminannoucement" element={<AdminAnnouncement />} />
                 <Route path="/adminnotification" element={<AdminNotification />} />
                 <Route path="/adminnotification2" element={<AdminNotification2 />} />
@@ -133,5 +134,6 @@ const AppContent = ({ setBar, bar }) => {
         </>
     );
 };
+
 
 export default App;

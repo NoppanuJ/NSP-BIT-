@@ -56,9 +56,14 @@ const Login = () => {
                     // เก็บข้อมูลใน Local Storage (Base64 Encode)
                     const base64Encode = (str) => btoa(str); // ฟังก์ชันเข้ารหัส Base64
                     localStorage.setItem("loggedInUser", base64Encode(email));
+                    console.log(response.data.data.Role);
 
                     // เปลี่ยนหน้าไปยัง Dashboard
-                    navigate('/dashboard');
+                    if(response.data.data.Role === "admin") {
+                        navigate('/adminmain');
+                    } else {
+                        navigate('/dashboard');
+                    }
 
                     // แสดงข้อความสำเร็จ
                     const Toast = Swal.mixin({
@@ -103,7 +108,7 @@ const Login = () => {
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("loggedInUser");
-        if (loggedInUser) {
+        if (loggedInUser ) {
             navigate('/dashboard');
         }
     }, []);
