@@ -13,7 +13,6 @@ exports.getAllNurses = async (req, res) => {
 };
 
 exports.editProfile = async (req, res) => {
-  console.log(req.body);
   const data = {
     User_First_Name: req.body.firstName,
     User_Last_Name: req.body.lastName,
@@ -23,7 +22,6 @@ exports.editProfile = async (req, res) => {
   }
   try {
     const nurse = await Nurse.findOneAndUpdate({ User_Email: req.body.email }, data, { new: true });
-    console.log(nurse);
     if (!nurse) {
       return res.status(404).json({ message: 'Nurse not found' });
     }
@@ -34,10 +32,8 @@ exports.editProfile = async (req, res) => {
 }
 
 exports.getNurseByEmail = async (req, res) => {
-  console.log(req.params.email);
   try {
     const nurse = await Nurse.findOne({ User_Email: req.params.email });
-    console.log(nurse);
     if (!nurse) {
       return res.status(404).json({ message: 'Nurse not found' });
     }

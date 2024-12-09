@@ -31,7 +31,6 @@ exports.signUpUser = async (req, res) => {
 
     const nurse_id = await Nurse.find().sort({ Nurse_ID : -1 }).limit(1);
     const nurse_id_int = parseInt(nurse_id[0].Nurse_ID) + 1;
-    console.log(nurse_id_int);
 
     // สร้างผู้ใช้ใหม่
     const user = await Nurse.create({
@@ -46,9 +45,6 @@ exports.signUpUser = async (req, res) => {
       Profile_Picture : "",
       Role : "user"
     });
-
-    console.log(user);
-
     const login = await Login.create({ email, password, token: hashedPassword });
     // ส่งผลลัพธ์กลับไป
     res.status(201).json({
@@ -62,8 +58,7 @@ exports.signUpUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
-  
+
   try {
     const user = await Login.findOne({ email });
     const hashedPassword = user.token;
@@ -75,7 +70,8 @@ exports.loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid password' });
     }
-    res.status(200).json({ message: 'Login successful' });
+    const dataNurse = await Nurse.findOne({ User_Email: email });
+    res.status(200).json({ message: 'Login successful', data : dataNurse });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
