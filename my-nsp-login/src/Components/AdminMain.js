@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Button, Paper, Grid, IconButton } from '@mui/material';
 import { FaCalendarAlt, FaBullhorn, FaBell, FaUserNurse } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +30,7 @@ const checkpersonnellist = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" startIcon={<FaBullhorn />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '250px' }} onClick={createannoucement}>
+            <Button variant="contained" startIcon={<FaBullhorn />} sx={{ backgroundColor: '#5A8DFF', padding: '20px', width: '270px' }} onClick={createannoucement}>
               Create Announcement
             </Button>
           </Grid>
