@@ -10,6 +10,7 @@ const nurseSchema = new mongoose.Schema({
   Phone_Number: { type: String, required: true },
   User_Email: { type: String, required: true },
   Profile_Picture : { type: String, required: false },
+  Schedule_Nurse  : { type: Array, required: false },
   Role : { type: String, required: true },
 });
 
