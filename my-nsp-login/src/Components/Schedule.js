@@ -6,13 +6,16 @@ import dayjs from 'dayjs';
 import '../CssComponents/Schedule.css';
 import axios from 'axios';
 
-const Schedule = () => {
+const Schedule = ({nurseData}) => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [schedule, setSchedule] = useState({});
   const [exp_date, setExp_date] = useState(null);
 
   useEffect(() => {
+
+    // console.log(localStorage.getItem('loggedInUser'));
     const Nurse_ID = 1;
+    console.log(nurseData);
     axios.get('http://localhost:8000/launchAll')
       .then(response => {
         console.log(response.data);
@@ -22,7 +25,7 @@ const Schedule = () => {
           if (item.schedule && typeof item.schedule === 'object') {
               setExp_date(item.exp_time);
               Object.entries(item.schedule).forEach(([key, value]) => {
-                if (parseInt(key) === Nurse_ID) {
+                if (parseInt(key) === nurseData.Nurse_ID) {
                       console.log("Schedule:", value);
                       setSchedule(value);
                   }
