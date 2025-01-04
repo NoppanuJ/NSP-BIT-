@@ -8,10 +8,14 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const shifts = ["Morning", "Afternoon", "Night"];
+const currentYear = dayjs();
 
 
 const AdminCreateSchedule = () => {
@@ -20,7 +24,10 @@ const AdminCreateSchedule = () => {
   // const [numNurses, setNumNurses] = useState(12);
   const [nurses, setNurses] = useState([]);
   const [schedule, setSchedule] = useState([]);
-  const [dateExp, setDateExp] = useState('');
+  // const [dateExp, setDateExp] = useState('');
+  const [originalSchedule, setOriginalSchedule] = useState([]);
+  const [selectedYearAndMonth, setSelectedYeaAndMonth] = useState(null);
+
 
   useEffect(() => {
     axios.get('http://localhost:5001/nurses')
@@ -60,10 +67,6 @@ const AdminCreateSchedule = () => {
     }
   };
 
-  // const handleNursesChange = (event) => {
-  //   setNumNurses(event.target.value);
-  // };
-
   const handleLaunch = () => {
     // console.log(selectedNurses)
     const listNurses = selectedNurses.map((nurse) => nurse.Nurse_ID.toString());
@@ -101,8 +104,9 @@ const AdminCreateSchedule = () => {
       .then(response => {
         // console.log(response.data[0].exp_time);
         console.log(response.data);
-        setDateExp(response.data[0].exp_time);
+        // setDateExp(response.data[0].exp_time);
         setSchedule(response.data);
+        setOriginalSchedule(response.data);
       })
       .catch(error => {
         console.error(error);
@@ -117,6 +121,19 @@ const AdminCreateSchedule = () => {
     // console.log(scheduleData);
   };
 
+  useEffect(() => {
+    const filteredSchedule = originalSchedule.filter((item) => {
+      const itemYearMonth = dayjs(item.exp_time).format('YYYY-MM'); // แปลงค่า exp_time เป็นรูปแบบ YYYY-MM
+      const selectedYearMonth = dayjs(selectedYearAndMonth).format('YYYY-MM'); // แปลงค่า selectedYearAndMonth เป็นรูปแบบ YYYY-MM
+      return itemYearMonth.includes(selectedYearMonth); // ตรวจสอบว่าปีและเดือนตรงกัน
+    });
+    
+    console.log(dayjs(selectedYearAndMonth).format('YYYY-MM')); // แสดงค่าที่เลือก
+    console.log(filteredSchedule); // แสดงข้อมูลที่กรองแล้ว
+    setSchedule(filteredSchedule); // อัปเดต schedule ด้วยข้อมูลที่กรอง
+
+  }, [selectedYearAndMonth]);
+
   const transformScheduleData = (schedule) => {
     const result = {};
     Object.entries(schedule).forEach(([nurseId, scheduleArray]) => {
@@ -124,7 +141,7 @@ const AdminCreateSchedule = () => {
         const dayShifts = scheduleArray.slice(dayIndex * 3, (dayIndex + 1) * 3);
         return shifts
           .map((shift, shiftIndex) => ({
-            shift: shift === "Morning" ? "Morning : 9 - 12 AM" : shift === "Afternoon" ? "Afternoon : 12 - 3 PM" : shift === "Night" ? "Night : 3 - 6 PM" : "-",
+            shift: shift === "Morning" ? "  Morning : 9 - 12 AM" : shift === "Afternoon" ? "Afternoon : 12 - 3 PM" : shift === "Night" ? "Night : 3 - 6 PM" : "-",
             status: dayShifts[shiftIndex] === 1 ? "Work" : "Off",
           }))
           .filter((shiftObj) => shiftObj.status === "Work"); // กรองเฉพาะ shift ที่ status เป็น "Work"
@@ -136,6 +153,9 @@ const AdminCreateSchedule = () => {
     exp_time: item.exp_time,
     schedule: transformScheduleData(item.schedule),
   }));
+
+
+
 
   // console.log(scheduleData[0].exp_time);
 
@@ -212,96 +232,75 @@ const AdminCreateSchedule = () => {
           </Button>
         </Box>
       </Box>
-      <Box display={"flex"} marginTop={4} justifyContent={"end"} maxWidth={1700}>
-        <FormControl fullWidth sx={{ maxWidth: 200 }}>
-          <InputLabel id="demo-simple-select-label" sx={{ fontSize: '0.8rem' }}>Month</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Month"
-            size="small"
-            sx={{
-              fontSize: '0.8rem',
-              height: '50px', // กำหนดความสูง
-            }}
-          >
-            <MenuItem value={1} sx={{ fontSize: '0.8rem' }}>January</MenuItem>
-            <MenuItem value={2} sx={{ fontSize: '0.8rem' }}>February</MenuItem>
-            <MenuItem value={3} sx={{ fontSize: '0.8rem' }}>March</MenuItem>
-            <MenuItem value={4} sx={{ fontSize: '0.8rem' }}>April</MenuItem>
-            <MenuItem value={5} sx={{ fontSize: '0.8rem' }}>May</MenuItem>
-            <MenuItem value={6} sx={{ fontSize: '0.8rem' }}>June</MenuItem>
-            <MenuItem value={7} sx={{ fontSize: '0.8rem' }}>July</MenuItem>
-            <MenuItem value={8} sx={{ fontSize: '0.8rem' }}>August</MenuItem>
-            <MenuItem value={9} sx={{ fontSize: '0.8rem' }}>September</MenuItem>
-            <MenuItem value={10} sx={{ fontSize: '0.8rem' }}>October</MenuItem>
-            <MenuItem value={11} sx={{ fontSize: '0.8rem' }}>November</MenuItem>
-            <MenuItem value={12} sx={{ fontSize: '0.8rem' }}>December</MenuItem>
-          </Select>
-        </FormControl>
+      <Box display={"flex"} marginTop={4} justifyContent={"end"} maxWidth={1700} gap={2}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Years and Months"
+            maxDate={currentYear}
+            openTo="year"
+            views={['year', 'month']}
+            yearsOrder="desc"
+            onChange={(newValue) => setSelectedYeaAndMonth(newValue)}
+            sx={{ minWidth: 250 }}
+          />
+        </LocalizationProvider>
       </Box>
 
       <Box sx={{ backgroundColor: "#e0e0e0", padding: 3, borderRadius: 2, maxWidth: 1500, margin: "0 auto", marginTop: 4 }}>
-        <Typography variant="h6" sx={{ marginBottom: 2 }}>Nurse Schedule</Typography>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="nurse schedule table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center"><strong>Nurse ID</strong></TableCell>
-                <TableCell align="center"><strong>Name</strong></TableCell>
-                {days.map((day, index) => {
-                  const daysToSubtract = 6 - index;
-                  const formattedDate = dayjs(dateExp)
-                    .subtract(daysToSubtract, 'day')
-                    .format('YYYY-MM-DD');
-                  return (
-                    <TableCell align="center" key={day}>
-                      <strong>{day}</strong> <br></br>
-                      <strong>{formattedDate}</strong>
-                    </TableCell>
-                  )
-                })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {scheduleData.map((item, index) => (
-                Object.entries(item.schedule).map(([nurseId, nurseSchedule]) => (
-                  <TableRow key={`${index}-${nurseId}`}>
-                    <TableCell align="center">{nurseId + " "}</TableCell>
-                    {schedule.map((item, index) => (
-                      Object.entries(item.schedule).map(([key, values]) =>
-                        nurseId === key ? (
-                          <TableCell align="center" key={key}>
-                            {
-                              nurses.map((nurse) => {
-                                if (nurse.Nurse_ID === parseInt(key)) {
-                                  return nurse.User_First_Name + " " + nurse.User_Last_Name;
-                                }
-                                return null; // Return null for non-matching nurses
-                              }).filter(Boolean)[0] // Filter out null values and take the first match
-                            }
+        <Typography variant="h5" sx={{ marginBottom: 2 }}>Nurse Schedule</Typography>
 
+        <TableContainer component={Paper} sx={{ marginBottom: 4 }}>
+          <Typography variant="h6" sx={{ margin: 2 }}>Schedule</Typography>
+          <Table sx={{ minWidth: 650 }} aria-label="nurse schedule table">
+            {scheduleData.map((group, groupIndex) => (
+              <React.Fragment key={`group-${groupIndex}`}>
+                {/* TableHead */}
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center"><strong>Nurse ID</strong></TableCell>
+                    <TableCell align="center"><strong>Name</strong></TableCell>
+                    {group.schedule &&
+                      Object.values(group.schedule)[0].map((_, dayIndex) => {
+                        const daysToSubtract = 6 - dayIndex;
+                        const formattedDate = dayjs(group.exp_time)
+                          .subtract(daysToSubtract, 'day')
+                          .format('YYYY-MM-DD');
+                        return (
+                          <TableCell align="center" key={`group-${groupIndex}-day-${dayIndex}`}>
+                            <strong> {days[dayIndex]}</strong> <br />
+                            <strong>{formattedDate}</strong>
                           </TableCell>
-                        ) : null  // Render nothing (null) if nurseId doesn't match the key
-                      )
-                    ))}
-                    {nurseSchedule.map((daySchedule, dayIndex) => (
-                      <TableCell key={dayIndex} align="center">
-                        {daySchedule.map(({ shift, status }) => (
-                          <div key={shift}>
-                            {shift}
-                          </div>
-                        ))}
-                      </TableCell>
-                    ))}
+                        );
+                      })}
                   </TableRow>
-                ))
-              ))}
-            </TableBody>
+                </TableHead>
+
+                {/* TableBody */}
+                <TableBody>
+                  {Object.entries(group.schedule).map(([nurseId, nurseSchedule]) => (
+                    <TableRow key={`group-${groupIndex}-nurse-${nurseId}`}>
+                      <TableCell align="center">{nurseId}</TableCell>
+                      <TableCell align="center">
+                        {nurses.find(nurse => nurse.Nurse_ID === parseInt(nurseId))?.User_First_Name || "Unknown"}
+                      </TableCell>
+                      {nurseSchedule.map((daySchedule, dayIndex) => (
+                        <TableCell key={`group-${groupIndex}-nurse-${nurseId}-day-${dayIndex}`} align="center">
+                          {daySchedule.map(({ shift }) => (
+                            <div key={shift}>{shift}</div>
+                          ))}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </React.Fragment>
+            ))}
           </Table>
         </TableContainer>
 
+
       </Box>
+
     </Box>
   );
 };
