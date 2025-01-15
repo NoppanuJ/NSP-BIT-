@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import Login from './Components/Login';
@@ -61,26 +61,31 @@ const AppContent = ({ setBar, bar }) => {
         "/adminresult": "admin",
     };
 
+    const memoizedRoleMapping = useMemo(() => roleMapping, [roleMapping]);
+
     useEffect(() => {
         const storedEncodedEmail = localStorage.getItem("loggedInUser");
-
+    
         if (!storedEncodedEmail) {
             console.warn("No loggedInUser found in localStorage. Redirecting to login page...");
             setUserRole(null);
             if (location.pathname !== '/' && location.pathname !== '/signup') {
-               navigate("/");
+                navigate("/");
             }
-            return;
+            return; // Stop execution if no loggedInUser is found
         }
-
+    
         try {
             const decodedEmail = base64Decode(storedEncodedEmail);
-
+    
             axios.get(`http://localhost:5001/getNurseByEmail/${decodedEmail}`)
                 .then((response) => {
-                    setNurseData(response.data);
-                    const role = response.data?.Role || "user"; // Default to "user" if no role is provided
-                    setUserRole(role);
+                    if (!nurseData || nurseData.User_Email !== response.data.User_Email) {
+                        // Only update state if data has changed
+                        setNurseData(response.data);
+                        const role = response.data?.Role || "user"; // Default to "user" if no role is provided
+                        setUserRole(role);
+                    }
                 })
                 .catch((error) => {
                     console.error("Error fetching nurse data:", error);
@@ -90,7 +95,8 @@ const AppContent = ({ setBar, bar }) => {
             console.error("Error decoding email:", error);
             navigate("/");
         }
-    }, [roleMapping, nurseData]);
+    }, [memoizedRoleMapping, nurseData]); // Use the memoized roleMapping
+    
 
     useEffect(() => {
         const requiredRole = roleMapping[location.pathname];
