@@ -1,5 +1,6 @@
 import numpy as np
-
+import random
+import time
 
 class NurseSchedulingProblem:
     """This class encapsulates the Nurse Scheduling problem
@@ -13,13 +14,17 @@ class NurseSchedulingProblem:
 
         # list of nurses:
         self.nurses = nurses
-
+        
+        random.seed(time.time()) 
         # nurses' respective shift preferences - morning, evening, night:
-        self.shiftPreference = [[1, 0, 1], [0, 1, 0], [0, 0, 1], [1, 1, 1], [0, 1, 1], [1, 0, 1], [1, 1, 1], [0, 0, 1], [1, 1,0],[0, 1, 1], [1, 0, 0], [1, 0, 1]]
+        # self.shiftPreference = [[1, 0, 1], [0, 1, 0], [0, 0, 1], [1, 1, 1], [0, 1, 1], [1, 0, 1], [1, 1, 1], [0, 0, 1], [1, 1,0],[0, 1, 1], [1, 0, 0], [1, 0, 1]]
+        self.shiftPreference = [[random.randint(0, 1) for _ in range(3)] for _ in range(len(nurses))]
 
         # min and max number of nurses allowed for each shift - morning, evening, night:
-        self.shiftMin = [3, 3, 2]
-        self.shiftMax = [4, 4, 3]
+        self.shiftMin = [random.randint(2, 4) for _ in range(3)]
+        self.shiftMax = [min(m + random.randint(0, 2), 5) for m in self.shiftMin]
+        # self.shiftMin = [3, 3, 2]
+        # self.shiftMax = [4, 4, 3]
 
         # max shifts per week allowed for each nurse
         self.maxShiftsPerWeek = 5
