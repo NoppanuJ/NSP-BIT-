@@ -1,23 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch, Collapse } from '@mui/material';
 import { FaBell, FaLock, FaAngleDown, FaAngleLeft, FaAngleRight, FaAngleDoubleDown } from 'react-icons/fa';
 import '../CssComponents/Setting.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Setting = () => {
   const [notificationsOpen, setNotificationsOpen] = useState(true);
-  const [shiftChanges, setShiftChanges] = useState(true);
-  const [alerts, setAlerts] = useState(false);
-  const [messages, setMessages] = useState(false);
+  const [selected, setSelected] = useState();
+  const [nurseData, setNurseData] = useState([]);
+
+  const base64Decode = (base64String) => {
+    const decodedString = atob(base64String);
+    return decodedString;
+  }
+
+  useEffect(() => {
+    const storedEncodedEmail = localStorage.getItem("loggedInUser");
+    const decodedEmail = base64Decode(storedEncodedEmail);
+    console.log(decodedEmail);
+    axios.get(`http://localhost:5001/getNurseByEmail/${decodedEmail}`).then((response) => {
+        console.log(response.data);
+        setNurseData(response.data);
+        setSelected(response.data.Status);  
+    })
+}, []);
+
 
   const toggleNotificationsOpen = () => {
     setNotificationsOpen(!notificationsOpen);
   };
   const navigate = useNavigate();
-    
-  const changePassword = () => {       
-      navigate('/changepassword');
+
+  const changePassword = () => {
+    navigate('/changepassword');
   };
+
+  const handleToggle = (option) => {
+    console.log(option);
+    if (selected === option) {
+      return;
+    }
+    axios.post("http://localhost:5001/editStatus", {
+      email: nurseData.User_Email,
+      status: option
+    })
+    .then(res => {
+        console.log(res);
+        setSelected(res.data.Status);
+        
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+  };
+
 
   return (
     <div className="setting-container">
@@ -27,32 +65,32 @@ const Setting = () => {
       <div className="setting-section">
         <div className="setting-header" onClick={toggleNotificationsOpen}>
           <div className="settings-header-title">
-            <FaBell />
-            <span>Notifications</span>
+            {/* <FaBell /> */}
+            <span>Status</span>
           </div>
           <FaAngleDown className={`toggle-icon ${notificationsOpen ? 'open' : ''}`} />
         </div>
         <Collapse in={notificationsOpen}>
           <div className="notification-options">
             <div className="notification-item">
-              <span>Shift Changes</span>
+              <span>Active</span>
               <Switch
-                checked={shiftChanges}
-                onChange={() => setShiftChanges(!shiftChanges)}
+                checked={selected === "Active"}
+                onChange={() => handleToggle("Active")}
               />
             </div>
             <div className="notification-item">
-              <span>Alerts</span>
+              <span>Inactive</span>
               <Switch
-                checked={alerts}
-                onChange={() => setAlerts(!alerts)}
+                checked={selected === "Inactive"}
+                onChange={() => handleToggle("Inactive")}
               />
             </div>
             <div className="notification-item">
-              <span>Messages</span>
+              <span>Sick</span>
               <Switch
-                checked={messages}
-                onChange={() => setMessages(!messages)}
+                checked={selected === "Sick"}
+                onChange={() => handleToggle("Sick")}
               />
             </div>
           </div>
@@ -63,10 +101,10 @@ const Setting = () => {
       <div className="setting-section">
         <div className="setting-header">
           <div className="setting-header-title">
-            <FaLock />
+            {/* <FaLock /> */}
             <span>Change Password</span>
           </div>
-          <FaAngleRight className="toggle-icon" onClick={changePassword}/>
+          <FaAngleRight className="toggle-icon" onClick={changePassword} />
         </div>
       </div>
     </div>

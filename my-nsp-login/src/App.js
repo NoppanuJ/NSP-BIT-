@@ -122,13 +122,13 @@ const AppContent = ({ setBar, bar }) => {
                 <Route path="/" element={<Login/>} />
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/setting" element={<Setting />} />
+                <Route path="/setting" element={<Setting  nurseData={nurseData}/>} />
                 <Route path="/profiledisplay" element={<ProfileDisplay />} />
                 <Route path="/profileedit" element={<ProfileEdit />} />
                 <Route path="/changepassword" element={<ChangePassword />} />
                 <Route path="/notification" element={<Notification />} />
                 <Route path="/shiftrequest" element={<ShiftRequest />} />
-                <Route path="/schedule" element={<Schedule nurseData={nurseData} />} />
+                <Route path="/schedule" element={<Schedule/>} />
                 <Route path="/adminmain" element={<AdminMain/>} />
                 <Route path="/adminannoucement" element={<AdminAnnouncement />} />
                 <Route path="/adminnotification" element={<AdminNotification />} />

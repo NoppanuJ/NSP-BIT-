@@ -8,15 +8,15 @@ import axios from 'axios';
 import moment from "moment";
 
 const ProfileDisplay = () => {
-  const [profile, setProfile] = useState({
-    displayedName: 'John Doe',
-    firstName: 'John',
-    lastName: 'Doe',
-    sex: 'Male',
-    dateOfBirth: '01/01/2000',
-    phoneNumber: '0123456789',
-    email: 'johndoe@gmail.com',
-  });
+  // const [profile, setProfile] = useState({
+  //   displayedName: 'John Doe',
+  //   firstName: 'John',
+  //   lastName: 'Doe',
+  //   sex: 'Male',
+  //   dateOfBirth: '01/01/2000',
+  //   phoneNumber: '0123456789',
+  //   email: 'johndoe@gmail.com',
+  // });
 
   const [profileImage, setProfileImage] = useState(null);
   const [nurseData, setNurseData] = useState({});
