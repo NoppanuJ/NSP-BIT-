@@ -10,6 +10,8 @@ router.get('/getrequest', nurseController.getRequest);
 router.get('/getTradeShift', nurseController.getTradeShift);
 router.get('/getNurseByEmail/:email', nurseController.getNurseByEmail);
 router.post('/editProfile', nurseController.editProfile);
+router.post('/editStatus', nurseController.editStatus);
+router.delete('/deleteNurse/:id', nurseController.deleteNurse)
 
 module.exports = router;
 

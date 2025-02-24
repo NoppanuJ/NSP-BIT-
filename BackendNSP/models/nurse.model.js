@@ -12,6 +12,8 @@ const nurseSchema = new mongoose.Schema({
   Profile_Picture : { type: String, required: false },
   Schedule_Nurse  : { type: Array, required: false },
   Role : { type: String, required: true },
+  Status : { type: String, required: true, default: 'Inactive' },
+  CreatedAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Nurse', nurseSchema, "nurses");

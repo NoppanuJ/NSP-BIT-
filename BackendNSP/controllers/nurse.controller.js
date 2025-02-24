@@ -72,3 +72,40 @@ exports.createTradeShift = async (req, res) => {
 
 }
 
+exports.editStatus = async (req, res) => {
+  const data = {
+    Status: req.body.status
+  };
+  
+  console.log(data);
+  
+  try {
+    const nurse = await Nurse.findOneAndUpdate(
+      { User_Email: req.body.email },  // เงื่อนไขค้นหา
+       data,                            // ข้อมูลที่ต้องการอัปเดต
+      { new: true }                     // คืนค่าข้อมูลที่อัปเดตแล้ว
+    );
+
+    if (!nurse) {
+      return res.status(404).json({ message: "Nurse not found" });
+    }
+    console.log(nurse)
+    res.json(nurse);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteNurse = async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const nurse = await Nurse.findByIdAndDelete(req.params.id);
+    if (!nurse) {
+      return res.status(404).json({ message: "Nurse not found" });
+    }
+    res.json({ message: "Nurse deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
