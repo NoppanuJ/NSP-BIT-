@@ -250,53 +250,90 @@ const AdminCreateSchedule = () => {
         <Typography variant="h5" sx={{ marginBottom: 2 }}>Nurse Schedule</Typography>
 
         <TableContainer component={Paper} sx={{ marginBottom: 4 }}>
-          <Typography variant="h6" sx={{ margin: 2 }}>Schedule</Typography>
-          <Table sx={{ minWidth: 650 }} aria-label="nurse schedule table">
-            {scheduleData.map((group, groupIndex) => (
-              <React.Fragment key={`group-${groupIndex}`}>
-                {/* TableHead */}
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center"><strong>Nurse ID</strong></TableCell>
-                    <TableCell align="center"><strong>Name</strong></TableCell>
-                    {group.schedule &&
-                      Object.values(group.schedule)[0].map((_, dayIndex) => {
-                        const daysToSubtract = 6 - dayIndex;
-                        const formattedDate = dayjs(group.exp_time)
-                          .subtract(daysToSubtract, 'day')
-                          .format('YYYY-MM-DD');
-                        return (
-                          <TableCell align="center" key={`group-${groupIndex}-day-${dayIndex}`}>
-                            <strong> {days[dayIndex]}</strong> <br />
-                            <strong>{formattedDate}</strong>
-                          </TableCell>
-                        );
-                      })}
-                  </TableRow>
-                </TableHead>
+  <Typography variant="h6" sx={{ margin: 2 }}>Schedule</Typography>
+  <Table sx={{ minWidth: 650 }} aria-label="nurse schedule table">
+    {scheduleData.map((group, groupIndex) => (
+      <React.Fragment key={`group-${groupIndex}`}>
+        {/* Table Head */}
+        <TableHead>
+          <TableRow>
+            <TableCell align="center"><strong>Nurse ID</strong></TableCell>
+            <TableCell align="center"><strong>Name</strong></TableCell>
+            {group.schedule &&
+              Object.values(group.schedule)[0].map((_, dayIndex) => {
+                const daysToSubtract = 6 - dayIndex;
+                const formattedDate = dayjs(group.exp_time)
+                  .subtract(daysToSubtract, 'day')
+                  .format('YYYY-MM-DD');
+                return (
+                  <TableCell align="center" key={`group-${groupIndex}-day-${dayIndex}`}>
+                    <strong>{days[dayIndex]}</strong> <br />
+                    <strong>{formattedDate}</strong>
+                  </TableCell>
+                );
+              })}
+          </TableRow>
+        </TableHead>
 
-                {/* TableBody */}
-                <TableBody>
-                  {Object.entries(group.schedule).map(([nurseId, nurseSchedule]) => (
-                    <TableRow key={`group-${groupIndex}-nurse-${nurseId}`}>
-                      <TableCell align="center">{nurseId}</TableCell>
-                      <TableCell align="center">
-                        {nurses.find(nurse => nurse.Nurse_ID === parseInt(nurseId))?.User_First_Name || "Unknown"}
-                      </TableCell>
-                      {nurseSchedule.map((daySchedule, dayIndex) => (
-                        <TableCell key={`group-${groupIndex}-nurse-${nurseId}-day-${dayIndex}`} align="center">
-                          {daySchedule.map(({ shift }) => (
-                            <div key={shift}>{shift}</div>
-                          ))}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </React.Fragment>
-            ))}
-          </Table>
-        </TableContainer>
+        {/* Table Body */}
+        <TableBody>
+          {Object.entries(group.schedule).map(([nurseId, nurseSchedule]) => (
+            <TableRow key={`group-${groupIndex}-nurse-${nurseId}`}>
+              <TableCell align="center">{nurseId}</TableCell>
+              <TableCell align="center">
+                {nurses.find(nurse => nurse.Nurse_ID === parseInt(nurseId))?.User_First_Name || "Unknown"}
+              </TableCell>
+              {nurseSchedule.map((daySchedule, dayIndex) => (
+                <TableCell key={`group-${groupIndex}-nurse-${nurseId}-day-${dayIndex}`} align="center">
+                  {daySchedule.length > 0 ? (
+                    daySchedule.map(({ shift }) => (
+                      <Box
+                        key={shift}
+                        sx={{
+                          backgroundColor:
+                            shift.includes('Morning') ? '#DFF6FF' :
+                            shift.includes('Afternoon') ? '#FFF4CF' :
+                            shift.includes('Night') ? '#FFE0E9' :
+                            'transparent',
+                          padding: '4px 8px',
+                          borderRadius: '8px',
+                          marginBottom: '4px',
+                          fontSize: '0.85rem',
+                          fontWeight: 500,
+                        }}
+                      >
+                        {shift}
+                      </Box>
+                    ))
+                  ) : (
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 'bold',
+                        fontSize: '0.85rem',
+                        color: '#B71C1C',
+                      }}
+                    >
+                      No Shift
+                    </Typography>
+                  )}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+
+          {/* Spacer Row Between Weekly Groups */}
+          <TableRow>
+            <TableCell colSpan={9} sx={{ backgroundColor: '#f5f5f5', height: '40px' }} />
+          </TableRow>
+        </TableBody>
+      </React.Fragment>
+    ))}
+  </Table>
+</TableContainer>
+
+
+
 
 
       </Box>
