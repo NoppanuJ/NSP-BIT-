@@ -250,13 +250,20 @@ const AdminCreateSchedule = () => {
         <Typography variant="h5" sx={{ marginBottom: 2 }}>Nurse Schedule</Typography>
 
         <TableContainer component={Paper} sx={{ marginBottom: 4 }}>
-  <Typography variant="h6" sx={{ margin: 2 }}>Schedule</Typography>
+  <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>Schedule</Typography>
   <Table sx={{ minWidth: 650 }} aria-label="nurse schedule table">
     {scheduleData.map((group, groupIndex) => (
       <React.Fragment key={`group-${groupIndex}`}>
-        {/* Table Head */}
+        {/* Fancy Week Label */}
         <TableHead>
           <TableRow>
+            <TableCell colSpan={9} sx={{ backgroundColor: '#0E46A3', color: 'white', fontWeight: 'bold', fontSize: '18px', borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
+              Week {groupIndex + 1}
+            </TableCell>
+          </TableRow>
+
+          {/* Table Column Headers */}
+          <TableRow sx={{ backgroundColor: '#f0f0f0' }}>
             <TableCell align="center"><strong>Nurse ID</strong></TableCell>
             <TableCell align="center"><strong>Name</strong></TableCell>
             {group.schedule &&
@@ -267,8 +274,8 @@ const AdminCreateSchedule = () => {
                   .format('YYYY-MM-DD');
                 return (
                   <TableCell align="center" key={`group-${groupIndex}-day-${dayIndex}`}>
-                    <strong>{days[dayIndex]}</strong> <br />
-                    <strong>{formattedDate}</strong>
+                    <strong>{days[dayIndex]}</strong><br />
+                    <span style={{ color: '#333' }}>{formattedDate}</span>
                   </TableCell>
                 );
               })}
@@ -276,13 +283,21 @@ const AdminCreateSchedule = () => {
         </TableHead>
 
         {/* Table Body */}
-        <TableBody>
+        <TableBody sx={{ backgroundColor: '#fff' }}>
           {Object.entries(group.schedule).map(([nurseId, nurseSchedule]) => (
-            <TableRow key={`group-${groupIndex}-nurse-${nurseId}`}>
+            <TableRow
+              key={`group-${groupIndex}-nurse-${nurseId}`}
+              sx={{
+                '&:hover': {
+                  backgroundColor: '#f9f9f9',
+                },
+              }}
+            >
               <TableCell align="center">{nurseId}</TableCell>
               <TableCell align="center">
                 {nurses.find(nurse => nurse.Nurse_ID === parseInt(nurseId))?.User_First_Name || "Unknown"}
               </TableCell>
+
               {nurseSchedule.map((daySchedule, dayIndex) => (
                 <TableCell key={`group-${groupIndex}-nurse-${nurseId}-day-${dayIndex}`} align="center">
                   {daySchedule.length > 0 ? (
@@ -291,15 +306,16 @@ const AdminCreateSchedule = () => {
                         key={shift}
                         sx={{
                           backgroundColor:
-                            shift.includes('Morning') ? '#DFF6FF' :
-                            shift.includes('Afternoon') ? '#FFF4CF' :
-                            shift.includes('Night') ? '#FFE0E9' :
+                            shift.includes('Morning') ? '#E3F2FD' :
+                            shift.includes('Afternoon') ? '#FFF8E1' :
+                            shift.includes('Night') ? '#FFEBEE' :
                             'transparent',
                           padding: '4px 8px',
-                          borderRadius: '8px',
-                          marginBottom: '4px',
+                          borderRadius: '12px',
                           fontSize: '0.85rem',
                           fontWeight: 500,
+                          marginBottom: '4px',
+                          boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
                         }}
                       >
                         {shift}
@@ -311,7 +327,8 @@ const AdminCreateSchedule = () => {
                       sx={{
                         fontWeight: 'bold',
                         fontSize: '0.85rem',
-                        color: '#B71C1C',
+                        color: '#b0b0b0',
+                        fontStyle: 'italic',
                       }}
                     >
                       No Shift
@@ -321,16 +338,17 @@ const AdminCreateSchedule = () => {
               ))}
             </TableRow>
           ))}
-
-          {/* Spacer Row Between Weekly Groups */}
-          <TableRow>
-            <TableCell colSpan={9} sx={{ backgroundColor: '#f5f5f5', height: '40px' }} />
-          </TableRow>
         </TableBody>
+
+        {/* Spacer Row */}
+        <TableRow>
+          <TableCell colSpan={9} sx={{ height: '40px', backgroundColor: '#fafafa' }} />
+        </TableRow>
       </React.Fragment>
     ))}
   </Table>
 </TableContainer>
+
 
 
 
