@@ -17,7 +17,7 @@ const Schedule = ({nurseData}) => {
   useEffect(() => {
 
     // console.log(localStorage.getItem('loggedInUser'));
-    // console.log(nurseData);
+    console.log(nurseData);
     axios.get('http://localhost:8000/launchAll')
       .then(response => {
         console.log(response.data);
@@ -25,12 +25,12 @@ const Schedule = ({nurseData}) => {
         const schedules = [];
         response.data.forEach(item => {
           // console.log("Schedule:", item.schedule); // ตรวจสอบค่า schedule
-          expDates.push(item.exp_time);
           if (item.schedule && typeof item.schedule === 'object') {
-              // setExp_date(item.exp_time);
-              Object.entries(item.schedule).forEach(([key, value]) => {
-                if (parseInt(key) === nurseData.Nurse_ID) {
-                      console.log("Schedule:", value);
+            // setExp_date(item.exp_time);
+            Object.entries(item.schedule).forEach(([key, value]) => {
+              if (parseInt(key) === nurseData.Nurse_ID) {
+                console.log("Schedule:", value);
+                expDates.push(item.exp_time);
                       setSchedule(value);
                       schedules.push(value);
                     }
@@ -54,11 +54,10 @@ const Schedule = ({nurseData}) => {
     const schedules = []; // Store the final schedule
     const shiftNames = ["morning", "afternoon", "night"]; // Shift names
     const shiftsPerDay = 3; // Number of shifts per day
-  
     // Process each array_shilf
     listShilfs.array_shilfs.forEach((schedule, index) => {
       const expDate = new Date(listShilfs.exp_time[index]); // Expiration date for this shift set
-  
+      
       // Traverse the schedule backwards to calculate dates
       let currentDate = new Date(expDate);
   
@@ -92,7 +91,7 @@ const Schedule = ({nurseData}) => {
   useEffect(() => {
     if (schedule.length > 0) {
       console.log("Generated Schedule:", generateSchedule());
-      console.log(listShilfs)
+      console.log("listShilfs :" + JSON.stringify(listShilfs, null, 2))
     }
   }, [schedule]);
 
