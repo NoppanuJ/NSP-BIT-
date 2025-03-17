@@ -128,7 +128,7 @@ const AppContent = ({ setBar, bar }) => {
                 <Route path="/changepassword" element={<ChangePassword />} />
                 <Route path="/notification" element={<Notification />} />
                 <Route path="/shiftrequest" element={<ShiftRequest />} />
-                <Route path="/schedule" element={<Schedule/>} />
+                <Route path="/schedule" element={<Schedule nurseData={nurseData}/>} />
                 <Route path="/adminmain" element={<AdminMain/>} />
                 <Route path="/adminannoucement" element={<AdminAnnouncement />} />
                 <Route path="/adminnotification" element={<AdminNotification />} />
