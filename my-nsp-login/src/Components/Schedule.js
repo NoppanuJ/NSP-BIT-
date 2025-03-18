@@ -52,7 +52,7 @@ const Schedule = ({nurseData}) => {
   
   const generateSchedule = () => {
     const schedules = []; // Store the final schedule
-    const shiftNames = ["morning", "afternoon", "night"]; // Shift names
+    const shiftNames = ["Morning", "Afternoon", "Night"]; // Shift names
     const shiftsPerDay = 3; // Number of shifts per day
   
     // Process each array_shilf
